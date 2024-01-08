@@ -92,54 +92,50 @@ function RouteWalk() {
     }, []);
 
     const toCenter = () => {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(position => {
-                const loc = new window.Tmapv3.LatLng(position.coords.latitude, position.coords.longitude);
-                setCurrentLocation(loc);
+        // 지도 중심을 초기 위치로 이동
+        mapRef.current.setCenter(currentLocation);
+    }
 
-                // 현재 위치에 마커 생성
-                if (!meRef.current) {
-                    meRef.current = new window.Tmapv3.Marker({
-                        position: loc,
-                        icon: "/Ellipse304.png",
-                        map: mapRef.current
-                    });
-                }
-
-                // 지도 중심을 현재 위치로 이동
-                mapRef.current.setCenter(loc);
-            }, error => {
-                console.error("Geolocation error: " + error.message);
-            }, {
-                enableHighAccuracy: false,
-                timeout: 10000,
-                maximumAge: 60000
-            });
-        } else {
-            console.error("Geolocation is not supported by this browser.");
-        }
+    // 장소 임의 선택
+    const selectRandomPlaces = (places, count) => {
+        const shuffled = places.sort(() => 0.5 - Math.random());
+        return shuffled.slice(0, count);
     }
 
     // 도보 경로 요청
     const getPedestrianRoute = async () => {
         if (currentLocation && mapRef.current) {
+            const selectedPlaces = selectRandomPlaces(places, 3);
+
+            selectedPlaces.unshift({
+                axisX: currentLocation._lng,
+                axisY: currentLocation._lat
+            })
+
+            console.log("selectedPlaces", selectedPlaces);
+
             const headers = {
                 appKey: process.env.REACT_APP_API_KEY // 여기에 발급받은 Appkey 입력
             };
 
             try {
-                const response = await axios.post("https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1&format=json&callback=result", {
-                    startX: currentLocation._lng,
-                    startY: currentLocation._lat,
-                    endX: places[0].longitude, // 예시 도착지점 경도
-                    endY: places[0].latitude, // 예시 도착지점 위도
-                    reqCoordType: "WGS84GEO",
-                    resCoordType: "WGS84GEO",
-                    startName: "출발지",
-                    endName: "도착지",
-                }, { headers });
+                const allRouteData = [];
+                for (let i = 0; i < selectedPlaces.length - 1; i++) {
+                    const response = await axios.post("https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1&format=json&callback=result", {
+                        startX: selectedPlaces[i].axisX,
+                        startY: selectedPlaces[i].axisY,
+                        endX: selectedPlaces[i + 1].axisX,
+                        endY: selectedPlaces[i + 1].axisY,
+                        reqCoordType: "WGS84GEO",
+                        resCoordType: "WGS84GEO",
+                        startName: "출발지",
+                        endName: "도착지",
+                    }, { headers });
 
-                drawPedestrianRoute(response.data.features);
+                    allRouteData.push(...response.data.features);
+                }
+
+                drawPedestrianRoute(allRouteData);
             } catch (error) {
                 console.error("Error on pedestrian route planning", error);
             }
