@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import places from '../data/places';
 import axios from "axios";
-function Tmap() {
+function RouteWalk() {
     const mapRef = useRef(null);
     const meRef = useRef(null);
     const [currentLocation, setCurrentLocation] = useState(null);
@@ -173,4 +173,4 @@ function Tmap() {
     );
 }
 
-export default Tmap;
+export default RouteWalk;
