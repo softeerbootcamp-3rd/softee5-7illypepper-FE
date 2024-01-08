@@ -1,77 +1,94 @@
 import React, {useEffect, useRef, useState} from 'react';
-import places from '../data/places';
+// import places from '../data/places';
 import axios from "axios";
 function RouteWalk() {
     const mapRef = useRef(null);
     const meRef = useRef(null);
-    const [currentLocation, setCurrentLocation] = useState(null);
+    const [currentLocation, setCurrentLocation] = useState([]);
 
-    // const [places, setPlaces] = useState([]);
+    const [places, setPlaces] = useState([]);
 
     // 현재 위치를 서버로 보내는 함수
     const sendCurrentLocationToServer = async (location) => {
         try {
+            console.log(location);
             const response = await axios.post('/find', {
                 axisX: location._lat,
                 axisY: location._lng
             });
             console.log("Location sent to server: ", response.data);
+
+            setPlaces(response.data);
         } catch (error) {
             console.error("Error sending location to server: ", error);
         }
     };
 
     useEffect(() => {
+        console.log("places updated: ", places);
+        places.map((place) => {
+            new window.Tmapv3.Marker({
+                position: new window.Tmapv3.LatLng(place.axisY, place.axisX),
+                icon: "/pin.png",
+                iconSize: new window.Tmapv3.Size(42, 73),
+                map: mapRef.current
+            });
+        });
+    }, [places]);
+
+    useEffect(() => {
         // 지도 초기화
         if (!mapRef.current) {
             const map = new window.Tmapv3.Map("map_div", {
-                center: new window.Tmapv3.LatLng(places[0].latitude, places[0].longitude),
+                center: new window.Tmapv3.LatLng(37.4860034618704, 127.03449720489127),
                 width: "360px",
                 height: "800px",
                 zoom: 14
             });
             mapRef.current = map;
 
-            places.forEach(place => {
-                new window.Tmapv3.Marker({
-                    position: new window.Tmapv3.LatLng(place.latitude, place.longitude),
-                    icon: "/pin.png",
-                    iconSize: new window.Tmapv3.Size(42, 73),
-                    map: map
-                });
+            // 초기 위치에 마커 생성
+            setCurrentLocation(new window.Tmapv3.LatLng(37.4860034618704, 127.03449720489127));
+            new window.Tmapv3.Marker({
+                position: new window.Tmapv3.LatLng(37.4860034618704, 127.03449720489127),
+                icon: "/Ellipse304.png",
+                map: map
             });
+
+            // 현재 위치를 서버로 보내기
+            sendCurrentLocationToServer(new window.Tmapv3.LatLng(127.03449720489127, 37.4860034618704));
         }
 
-        // 현재 위치 가져오기
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(position => {
-                const loc = new window.Tmapv3.LatLng(position.coords.latitude, position.coords.longitude);
-                setCurrentLocation(loc);
-
-                // 현재 위치에 마커 생성
-                if (!meRef.current) {
-                    meRef.current = new window.Tmapv3.Marker({
-                        position: loc,
-                        icon: "/Ellipse304.png",
-                        map: mapRef.current
-                    });
-                }
-
-                // 지도 중심을 현재 위치로 이동
-                mapRef.current.setCenter(loc);
-
-                // 현재 위치를 서버로 보내기
-                sendCurrentLocationToServer(loc);
-            }, error => {
-                console.error("Geolocation error: " + error.message);
-            }, {
-                enableHighAccuracy: false,
-                timeout: 10000,
-                maximumAge: 60000
-            });
-        } else {
-            console.error("Geolocation is not supported by this browser.");
-        }
+        // // 현재 위치 가져오기
+        // if (navigator.geolocation) {
+        //     navigator.geolocation.getCurrentPosition(position => {
+        //         const loc = new window.Tmapv3.LatLng(position.coords.latitude, position.coords.longitude);
+        //         setCurrentLocation(loc);
+        //
+        //         // 현재 위치에 마커 생성
+        //         if (!meRef.current) {
+        //             meRef.current = new window.Tmapv3.Marker({
+        //                 position: loc,
+        //                 icon: "/Ellipse304.png",
+        //                 map: mapRef.current
+        //             });
+        //         }
+        //
+        //         // 지도 중심을 현재 위치로 이동
+        //         mapRef.current.setCenter(loc);
+        //
+        //         // 현재 위치를 서버로 보내기
+        //         sendCurrentLocationToServer(loc);
+        //     }, error => {
+        //         console.error("Geolocation error: " + error.message);
+        //     }, {
+        //         enableHighAccuracy: false,
+        //         timeout: 10000,
+        //         maximumAge: 60000
+        //     });
+        // } else {
+        //     console.error("Geolocation is not supported by this browser.");
+        // }
     }, []);
 
     const toCenter = () => {
@@ -147,7 +164,7 @@ function RouteWalk() {
 
         new window.Tmapv3.Polyline({
             path: linePath,
-            strokeColor: "#FF0000",
+            strokeColor: "#FF8058",
             strokeWeight: 6,
             map: mapRef.current
         });
