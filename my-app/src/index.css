@@ -46,6 +46,29 @@ code {
   line-height: 22px; /* 122.222% */
 }
 
+#startbutton-dark{
+  display: flex;
+  width: 289px;
+  height: 23px;
+  padding: 12.5px 15.5px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  border-radius: 100px;
+  background: var(--main-color, #DFDFDF);
+}
+
+#startbutton-dark-text{
+  color: var(--gray_500, #949494);
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 22px; /* 122.222% */
+}
+
 #onboarding-account-text{
   color: #000;
   font-family: Pretendard;
@@ -63,4 +86,39 @@ code {
   font-style: normal;
   font-weight: 600;
   line-height: 20px; /* 142.857% */
+}
+
+#login-input{
+  display: inline-flex;
+  padding: 13px 135px 13px 10px;
+  align-items: center;
+  gap: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--gray_500, #949494);
+}
+
+#login-input::placeholder{
+  color: var(--gray_300, #C8C8C8);
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 142.857% */
+  width : 200px;
+}
+
+#login-input:focus {
+  border-color: #FF8058; 
+  outline: none; 
+}
+
+#login-text{
+  color: var(--gray-1, #292929);
+
+/* heading 1_bold */
+font-family: Pretendard;
+font-size: 22px;
+font-style: normal;
+font-weight: 600;
+line-height: 30px; /* 136.364% */
 }

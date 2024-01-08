@@ -6,12 +6,14 @@ import {
     RouterProvider,
   } from "react-router-dom";
 import Onboarding from './pages/Onboarding'
+import Login from './pages/Login'
 
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route>
-        <Route path="/" element={<Navigate to="/Onboarding" replace />} />
-        <Route path="/Onboarding" element={<Onboarding/>} />   
+        <Route path="/" element={<Navigate to="/onboarding" replace />} />
+        <Route path="/onboarding" element={<Onboarding/>} />
+        <Route path="/login" element={<Login/>} />      
         <Route path="*" element={<h1>NotFound</h1>} />
       </Route>
     )
