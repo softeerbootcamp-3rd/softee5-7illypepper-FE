@@ -11,3 +11,56 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@font-face {
+  font-family: "Pretendard-Regular";
+  font-weight: normal;
+  src: url("./fonts/Pretendard-1.3.9/public/static/Pretendard-Regular.otf") format("woff");
+}
+.background{
+  width: 360px;
+  height: 800px;
+  background: #FFF;
+}
+
+#startbutton{
+  display: flex;
+  width: 289px;
+  height: 23px;
+  padding: 12.5px 15.5px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  border-radius: 100px;
+  background: var(--main-color, #FF8058);
+}
+
+#startbutton-text{
+  color: var(--white, #FFF);
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 22px; /* 122.222% */
+}
+
+#onboarding-account-text{
+  color: #000;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 142.857% */
+}
+
+#onboarding-login-text{
+  color: var(--main-color, #FF8058);
+  margin-left : 4px;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px; /* 142.857% */
+}
