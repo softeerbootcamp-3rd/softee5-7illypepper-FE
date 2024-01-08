@@ -27,10 +27,20 @@ function RouteWalk() {
     useEffect(() => {
         console.log("places updated: ", places);
         places.map((place) => {
+            let iconPath = "";
+            let iconSize = 0;
+            if (place.size) {
+                iconPath = "/pinBig.png";
+                iconSize = new window.Tmapv3.Size(42, 73);
+            } else {
+                iconPath = "/pinSmall.png";
+                iconSize = new window.Tmapv3.Size(28, 40);
+            }
+
             new window.Tmapv3.Marker({
                 position: new window.Tmapv3.LatLng(place.axisY, place.axisX),
-                icon: "/pin.png",
-                iconSize: new window.Tmapv3.Size(42, 73),
+                icon: iconPath,
+                iconSize: iconSize,
                 map: mapRef.current
             });
         });
