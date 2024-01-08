@@ -18,7 +18,7 @@ import RouteWalk from "./components/RouteWalk";
         <Route path="/login" element={<Login/>} /> 
         <Route path="/map" element={<Map/>} />      
         <Route path="*" element={<h1>NotFound</h1>} />
-        <Route path="/map/route" element={<RouteWalk/>}/>
+        <Route path="/route" element={<RouteWalk/>}/>
       </Route>
     )
   );

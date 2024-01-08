@@ -6,6 +6,21 @@ function RouteWalk() {
     const meRef = useRef(null);
     const [currentLocation, setCurrentLocation] = useState(null);
 
+    // const [places, setPlaces] = useState([]);
+
+    // 현재 위치를 서버로 보내는 함수
+    const sendCurrentLocationToServer = async (location) => {
+        try {
+            const response = await axios.post('/find', {
+                axisX: location._lat,
+                axisY: location._lng
+            });
+            console.log("Location sent to server: ", response.data);
+        } catch (error) {
+            console.error("Error sending location to server: ", error);
+        }
+    };
+
     useEffect(() => {
         // 지도 초기화
         if (!mapRef.current) {
@@ -37,13 +52,16 @@ function RouteWalk() {
                 if (!meRef.current) {
                     meRef.current = new window.Tmapv3.Marker({
                         position: loc,
-                        icon: "/Ellipse 304.png",
+                        icon: "/Ellipse304.png",
                         map: mapRef.current
                     });
                 }
 
                 // 지도 중심을 현재 위치로 이동
                 mapRef.current.setCenter(loc);
+
+                // 현재 위치를 서버로 보내기
+                sendCurrentLocationToServer(loc);
             }, error => {
                 console.error("Geolocation error: " + error.message);
             }, {
@@ -66,7 +84,7 @@ function RouteWalk() {
                 if (!meRef.current) {
                     meRef.current = new window.Tmapv3.Marker({
                         position: loc,
-                        icon: "/Ellipse 304.png",
+                        icon: "/Ellipse304.png",
                         map: mapRef.current
                     });
                 }
@@ -145,7 +163,7 @@ function RouteWalk() {
         <div style={{position: 'relative', width: '100%', height: '100vh'}}>
             <div id="map_div" style={{width: '100%', height: '100%'}}/>
             <img
-                src="/Frame 1261154356.png" // '지도 중앙으로' 버튼 이미지 경로
+                src="/Frame1261154356.png" // '지도 중앙으로' 버튼 이미지 경로
                 onClick={toCenter}
                 style={{
                     position: 'absolute',
@@ -157,7 +175,7 @@ function RouteWalk() {
                 alt="지도 중앙으로"
             />
             <img
-                src="/Frame 3020.png" // '경로 요청 실행' 버튼 이미지 경로
+                src="/Frame3020.png" // '경로 요청 실행' 버튼 이미지 경로
                 onClick={getPedestrianRoute}
                 style={{
                     position: 'absolute',
