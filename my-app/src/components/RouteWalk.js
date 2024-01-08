@@ -142,10 +142,16 @@ function RouteWalk() {
         }
     };
 
+    const [routePolyline, setRoutePolyline] = useState(null);
+
     // 도보 경로 그리기
     const drawPedestrianRoute = (routeData) => {
         console.log("drawPedestrianRoute()");
         // console.log("routeData: ", JSON.stringify(routeData, null, 2));
+
+        if (routePolyline) {
+            routePolyline.setMap(null);
+        }
 
         const linePath = [];
         routeData.map((feature, index) => {
@@ -158,12 +164,14 @@ function RouteWalk() {
             }
         });
 
-        new window.Tmapv3.Polyline({
+        const newPolyline = new window.Tmapv3.Polyline({
             path: linePath,
             strokeColor: "#FF8058",
             strokeWeight: 6,
             map: mapRef.current
         });
+
+        setRoutePolyline(newPolyline);
     };
 
     return (
