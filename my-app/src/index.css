@@ -115,10 +115,30 @@ code {
 #login-text{
   color: var(--gray-1, #292929);
 
-/* heading 1_bold */
-font-family: Pretendard;
-font-size: 22px;
-font-style: normal;
-font-weight: 600;
-line-height: 30px; /* 136.364% */
+  /* heading 1_bold */
+  font-family: Pretendard;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 30px; /* 136.364% */
+}
+
+#map-curposintro-text{
+  color: var(--gray_700, #555);
+  /* body 3_medium */
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px; /* 142.857% */
+}
+
+#map-curpos-text{
+  color: #000;
+  /* heading 1_bold */
+  font-family: Pretendard;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 30px; /* 136.364% */
 }

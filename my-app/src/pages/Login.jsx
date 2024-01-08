@@ -34,7 +34,7 @@ const Login = () => {
                     <StartButtonDark />
                 </div>
                 :
-                <div style = {{position : 'absolute', top : '712px'}} onClick={() => {navigate("/login")}}>
+                <div style = {{position : 'absolute', top : '712px'}} onClick={() => {navigate("/map")}}>
                     <StartButton />
                 </div>
             }
