@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import MapBackground from "../components/MapBackground";
 import Tmap from "../components/Tmap";
-import { useEffect } from "react";
+import ExitButton from "../components/MapExitButton";
 
 const Map = () => {
   const navigate = useNavigate();
@@ -15,6 +15,9 @@ const Map = () => {
         </div>
         <div style = {{position : 'absolute', top : '73px', left : '20px'}}>
             <div id ="map-curpos-text">{curPos}</div>
+        </div>
+        <div style = {{position : 'absolute', top : '50px', right : '40px'}}>
+            <ExitButton/>
         </div>
     </div>
   );
