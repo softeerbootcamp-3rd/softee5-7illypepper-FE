@@ -69,7 +69,10 @@ function RouteWalk() {
         places.map((place) => {
             let iconPath = "";
             let iconSize = 0;
-            let zidx = 0;
+
+            // 위도에 따른 z-index 계산
+            const zidx = Math.round((40 - place.axisY) * 100000);
+            console.log("z-Index by lat", zidx);
 
             const distance = calculateDistance(currentLocation, place);
 
@@ -108,7 +111,7 @@ function RouteWalk() {
                 `;
 
                 iconSize = new window.Tmapv3.Size(48, 89.93523);
-                zidx = 1003;
+                // zidx = 1003;
             } else if (place.size === 2) {
                 iconPath = `
                     <div style="
@@ -120,7 +123,7 @@ function RouteWalk() {
                     </div>
                 `;
                 iconSize = new window.Tmapv3.Size(28, 40);
-                zidx = 1002;
+                // zidx = 1002;
             } else if (place.size === 3) {
                 iconPath = `
                     <div style="
@@ -132,7 +135,7 @@ function RouteWalk() {
                     </div>
                 `;
                 iconSize = new window.Tmapv3.Size(24, 24);
-                zidx = 1001;
+                // zidx = 1001;
             }
 
             const marker = new window.Tmapv3.Marker({
