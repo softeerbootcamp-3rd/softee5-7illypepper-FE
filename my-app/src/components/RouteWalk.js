@@ -29,11 +29,16 @@ function RouteWalk() {
         places.map((place) => {
             let iconPath = "";
             let iconSize = 0;
+            let markerLabel = "";
+
+            const distance = calculateDistance(currentLocation, place);
+
             if (place.size) {
-                iconPath = "/pinBig.png";
+                iconPath = "/icon_pin_medium.png";
                 iconSize = new window.Tmapv3.Size(42, 73);
+                markerLabel = `<span style='background-color: #46414E;color:white'>${distance.toFixed(2)*1000} m</span>`;
             } else {
-                iconPath = "/pinSmall.png";
+                iconPath = "/icon_pin_regular.png";
                 iconSize = new window.Tmapv3.Size(28, 40);
             }
 
@@ -41,7 +46,8 @@ function RouteWalk() {
                 position: new window.Tmapv3.LatLng(place.axisY, place.axisX),
                 icon: iconPath,
                 iconSize: iconSize,
-                map: mapRef.current
+                map: mapRef.current,
+                label: markerLabel
             });
         });
     }, [places]);
@@ -53,7 +59,7 @@ function RouteWalk() {
                 center: new window.Tmapv3.LatLng(37.4860034618704, 127.03449720489127),
                 width: "360px",
                 height: "800px",
-                zoom: 14
+                zoom: 15.5
             });
             mapRef.current = map;
 
