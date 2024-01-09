@@ -29,11 +29,16 @@ function RouteWalk() {
         places.map((place) => {
             let iconPath = "";
             let iconSize = 0;
+            let markerLabel = "";
+
+            const distance = calculateDistance(currentLocation, place);
+
             if (place.size) {
-                iconPath = "/pinBig.png";
+                iconPath = "/icon_pin_medium.png";
                 iconSize = new window.Tmapv3.Size(42, 73);
+                markerLabel = `<span style='background-color: #46414E;color:white'>${distance.toFixed(2)*1000} m</span>`;
             } else {
-                iconPath = "/pinSmall.png";
+                iconPath = "/icon_pin_regular.png";
                 iconSize = new window.Tmapv3.Size(28, 40);
             }
 
@@ -41,9 +46,12 @@ function RouteWalk() {
                 position: new window.Tmapv3.LatLng(place.axisY, place.axisX),
                 icon: iconPath,
                 iconSize: iconSize,
-                map: mapRef.current
+                map: mapRef.current,
+                label: markerLabel
             });
         });
+
+        getPedestrianRoute();
     }, [places]);
 
     useEffect(() => {
@@ -53,7 +61,7 @@ function RouteWalk() {
                 center: new window.Tmapv3.LatLng(37.4860034618704, 127.03449720489127),
                 width: "360px",
                 height: "800px",
-                zoom: 14
+                zoom: 15.5
             });
             mapRef.current = map;
 
@@ -67,8 +75,9 @@ function RouteWalk() {
 
             // 현재 위치를 서버로 보내기
             sendCurrentLocationToServer(new window.Tmapv3.LatLng(127.03449720489127, 37.4860034618704));
+            
         }
-
+        
         // // 현재 위치 가져오기
         // if (navigator.geolocation) {
         //     navigator.geolocation.getCurrentPosition(position => {
@@ -100,6 +109,7 @@ function RouteWalk() {
         //     console.error("Geolocation is not supported by this browser.");
         // }
     }, []);
+
 
     const toCenter = () => {
         // 지도 중심을 초기 위치로 이동
@@ -146,6 +156,8 @@ function RouteWalk() {
             const headers = {
                 appKey: process.env.REACT_APP_API_KEY // 여기에 발급받은 Appkey 입력
             };
+
+            //console.log(process.env.REACT_APP_API_KEY);
 
             try {
                 const allRouteData = [];
@@ -217,27 +229,16 @@ function RouteWalk() {
                 onClick={toCenter}
                 style={{
                     position: 'absolute',
-                    bottom: '30px',
-                    left: '5%',
+                    bottom: '500px',
+                    left: '1%',
                     zIndex: 1000,
                     cursor: 'pointer' // 마우스 오버 시 포인터 모양 변경
                 }}
                 alt="지도 중앙으로"
             />
-            <img
-                src="/Frame3020.png" // '경로 요청 실행' 버튼 이미지 경로
-                onClick={getPedestrianRoute}
-                style={{
-                    position: 'absolute',
-                    bottom: '10px',
-                    left: '50%',
-                    transform: 'translateX(-50%)', // 가로 중앙 정확히 맞추기 위해
-                    zIndex: 1000,
-                    cursor: 'pointer'
-                }}
-                alt="경로 요청 실행"
-            />
+            <div onClick={getPedestrianRoute} style = {{ position : 'absolute', left : '320px' , top : '585px', display:'flex', width:'50px', height: '150px', zIndex :'300'}}/>
         </div>
+        
     );
 }
 

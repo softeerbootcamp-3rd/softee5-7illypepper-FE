@@ -28,9 +28,11 @@ const MapSelect = () => {
                 <div id="map-select-card-small-text" style={{position : 'relative', left : '2px'}}>3개</div>
             </div>
         </div>
-        <div id="map-select-card-button" style = {{position : 'relative', left : '166px' , top : '45px', display:'flex', justifyContent :'center', alignItems :'center'}}>
+        <div id="map-select-card-button" style = {{position : 'relative', left : '160px' , top : '45px', display:'flex', justifyContent :'center', alignItems :'center'}}>
             <div id="map-select-card-button-text">산책하러 가기</div>
         </div>
+
+        
       </div>
     );
   };
