@@ -5,7 +5,7 @@ import React from 'react';
 const BackButton = () => {
     const navigate = useNavigate();
     return (
-      <div onClick={() => {navigate(-1)}}>
+      <div onClick={() => {navigate(-1);}}>
         <ArrowLeft/>
       </div>
     );

@@ -374,3 +374,14 @@ font-style: normal;
 font-weight: 500;
 line-height: 20px; /* 142.857% */
 }
+
+#login-text-mini{
+  color: var(--gray_600, #777);
+margin-top: 3px;
+/* body 3_medium */
+font-family: Pretendard;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 20px; /* 142.857% */
+}

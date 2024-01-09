@@ -12,11 +12,12 @@ import RouteWalk from "./components/RouteWalk";
 import React from "react";
 import NavTime from "./pages/NavTime"
 import NavDest from "./pages/NavDest"
+import SignupNickname from "./pages/SignupNickname";
 
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route>
-        <Route path="/" element={<Navigate to="/onboarding" replace />} />
+        <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="/onboarding" element={<Onboarding/>} />
         <Route path="/login" element={<Login/>} />
         <Route path="/navtime" element={<NavTime/>}/> 
@@ -24,6 +25,7 @@ import NavDest from "./pages/NavDest"
         <Route path="*" element={<h1>NotFound</h1>} />
         <Route path="/route" element={<RouteWalk/>}/>
         <Route path="/navdest" element={<NavDest/>}/>
+        <Route path="/signupnickname" element={<SignupNickname/>}/>
       </Route>
     )
   );

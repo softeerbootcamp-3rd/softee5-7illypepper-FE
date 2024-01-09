@@ -12,14 +12,14 @@ const Map = () => {
   return (
     <div>
         <MapBackground/>
-        <RouteWalk/>
-        <div style = {{position : 'absolute', top : '50px', left : '20px'}}>
+         {/* <RouteWalk/> */}
+        <div style = {{position : 'absolute', top : '50px', left : '20px', zIndex : '101'}}>
             <div id ="map-curposintro-text">지금 위치한 지역은</div>
         </div>
-        <div style = {{position : 'absolute', top : '73px', left : '20px'}}>
+        <div style = {{position : 'absolute', top : '73px', left : '20px', zIndex : '101'}}>
             <div id ="map-curpos-text">{curPos}</div>
         </div>
-        <div style = {{position : 'absolute', top : '50px', left : '300px'}}>
+        <div style = {{position : 'absolute', top : '50px', left : '300px', zIndex : '101'}}>
             <ExitButton/>
         </div>
         <div style = {{position : 'absolute', top : '620px', left : '-280px'}}>

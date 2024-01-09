@@ -1,10 +1,10 @@
-
 import React from 'react';
+
 const StartButtonDark = () => {
   return (
     <div>
         <div id="startbutton-dark">
-            <div id="startbutton-dark-text">시작하기</div>
+            <div id="startbutton-dark-text">다음으로</div>
         </div>
     </div>
   );

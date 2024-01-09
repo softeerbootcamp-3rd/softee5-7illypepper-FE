@@ -6,7 +6,7 @@ import DefaultBackground from "../components/DefaultBackground";
 import { useForm, FormProvider, Controller } from "react-hook-form";
 import React from 'react';
 
-const Login = () => {
+const SignupNickname = () => {
   const navigate = useNavigate();
   const methods = useForm();
   const { watch, register, handleSubmit} = methods;
@@ -16,13 +16,17 @@ const Login = () => {
     <div>
         <DefaultBackground/>
         <div style = {{display:'flex', justifyContent :'center'}}>
-            <div style={{display:'flex',position : 'absolute', top : '98px', left :'20px'}}>
-                <div id="login-text">반가워요!<br/>휴대폰 번호로 로그인해주세요.</div>
+            <div  style={{display:'flex',position : 'absolute', top : '50px', left :'20px'}}>
+                <BackButton />
+            </div>
+            <div style={{position : 'absolute', top : '98px', left :'20px'}}>
+                <div id="login-text">닉네임을 설정해주세요.</div>
+                <div id="login-text-mini">나중에 언제든지 닉네임을 변경할 수 있어요.</div>
             </div>
             <input
                 id="login-input"
                 style={{display:'flex',position : 'absolute', top : '209px', left :'20px'}}
-                placeholder="휴대폰 번호 (-없이 숫자만 입력)"
+                placeholder="닉네임 입력"
                 aria-label="id"
                 {...register("id" , { required: true })}>
             </input>
@@ -32,8 +36,8 @@ const Login = () => {
                     <StartButtonDark  />
                 </div>
                 :
-                <div style = {{position : 'absolute', top : '712px'}}>
-                    <StartButton loc="/signupnickname" />
+                <div style = {{position : 'absolute', top : '712px'}} onClick={() => {navigate("/navtime")}}>
+                    <StartButton loc="/navdest" />
                 </div>
             }
             
@@ -42,4 +46,4 @@ const Login = () => {
   );
 };
   
-  export default Login;
+  export default SignupNickname;
