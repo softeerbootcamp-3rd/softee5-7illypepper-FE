@@ -71,7 +71,7 @@ const NavDest = () => {
                  </div>
                  :
                  <div style={{position:'absolute', top:'700px', left :'200px'}}>
-                    <NextButton loc="/"/>
+                    <NextButton loc="/navtheme"/>
                  </div>
             }
         </div>

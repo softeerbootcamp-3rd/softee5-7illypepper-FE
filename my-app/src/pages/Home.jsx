@@ -2,8 +2,7 @@ import { useNavigate } from "react-router-dom";
 import HomeBackground from "../components/HomeBackground";
 import React from 'react';
 import Menubar from '../assets/menubar.png';
-import MenubarButton from '../assets/menubar_circle.png';
-import MenubarWalk from '../assets/menubar_walk.png';
+import MenubarButton from '../assets/menubar_walkcircle.png';
 
 const Home = () => {
   const navigate = useNavigate();

@@ -15,6 +15,7 @@ import NavDest from "./pages/NavDest"
 import SignupNickname from "./pages/SignupNickname";
 import SignupInterest from "./pages/SignupInterest";
 import Home from "./pages/Home"
+import NavTheme from "./pages/NavTheme";
 
   const router = createBrowserRouter(
     createRoutesFromElements(
@@ -28,6 +29,7 @@ import Home from "./pages/Home"
         <Route path="/home" element={<Home/>}/>
         <Route path="/route" element={<RouteWalk/>}/>
         <Route path="/navdest" element={<NavDest/>}/>
+        <Route path="/navtheme" element={<NavTheme/>}/>
         <Route path="/signupnickname" element={<SignupNickname/>}/>
         <Route path="/signupinterest" element={<SignupInterest/>}/>
       </Route>
