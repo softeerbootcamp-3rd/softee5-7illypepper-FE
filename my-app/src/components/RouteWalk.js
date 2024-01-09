@@ -103,20 +103,35 @@ function RouteWalk() {
             map: mapRef.current,
         });
 
+        // 도착지 마커 생성
+        new window.Tmapv3.Marker({
+            position: new window.Tmapv3.LatLng(destLocation.x, destLocation.y),
+            icon: '/map_flag.png',
+            iconSize: new window.Tmapv3.Size(30, 35),
+            zIndex: 300000,
+            map: mapRef.current,
+        });
+
         // 현재 위치를 서버로 보내기
         sendCurrentLocationToServer(new window.Tmapv3.LatLng(initialLocation.y, initialLocation.x));
     }, []);
 
     function getIconPathByCategory(categoryId, size) {
         switch (categoryId) {
-            case 13:
-                return `/icon_pin_${size}_park.png`;
+            case 1:
+                return `/pin_camera_${size}.png`;
             case 3:
-                return `/icon_pin_${size}_stair.png`;
-            case 6:
-                return `/icon_pin_${size}_cat.png`;
+                return `/pin_animal_${size}.png`;
+            case 13:
+                return `/pin_park_${size}.png`;
             default:
-                return `/icon_pin_${size}_stair.png`;
+                const smallIcons = [
+                    '/pin_store_small.png',
+                    '/pin_stair_small.png',
+                    '/pin_lamp_small.png'
+                ];
+                const randIdx = Math.floor(Math.random() * smallIcons.length);
+                return smallIcons[randIdx];
         }
     }
 
@@ -133,42 +148,43 @@ function RouteWalk() {
             const distance = calculateDistance(currentLocation, place);
 
             // 거리와 카테고리로 이미지 종류 분기 (크기: 1, 2, 3) (카테고리: 2,3,5,6,8,9,12,13,14,15,16)
-            if (place.size===1) {
-                iconPath = `
-                  <div style="
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    width: 48px; /* 아이콘 너비 */
-                    height: 89.93523px; /* 아이콘 높이 */
-                    flex-shrink: 0;
-                    background-image: url('/icon_pin_medium.png'); /* 마커 이미지 */
-                    background-size: cover; /* 이미지가 div를 꽉 채우도록 */
-                    background-repeat: no-repeat;
-                    background-position: center;
-                    position: relative;
-                    ">
-                    <div style="
-                      color: black; /* 텍스트 색상 */
-                      font-size: 12px; /* 텍스트 크기 */
-                      /*padding: 2px 4px; !* 텍스트 패딩 *!*/
-                      background: rgba(255, 255, 255, 0); /* 텍스트 배경 반투명 흰색 */
-                      /*border-radius: 4px; !* 텍스트 배경 둥글게 *!*/
-                      /*box-shadow: 0px 2.133px 4.267px rgba(0, 0, 0, 0.2); !* 텍스트 배경 그림자 *!*/
-                      position: absolute; /* 절대 위치 */
-                      bottom: 10%; /* 상단에서 30px 위치 */
-                      left: 50%; /* 왼쪽에서 50% 위치 */
-                      transform: translate(-50%, 0%); /* 좌우 중앙 정렬 보정 */
-                      white-space: nowrap;
-                      ">
-                      ${Math.round(distance * 1000)} m
-                    </div>
-                  </div>
-                `;
-
-                iconSize = new window.Tmapv3.Size(48, 89.93523);
-                // zidx = 1003;
-            } else if (place.size === 2) {
+            // if (place.size===100) {
+            //     iconPath = `
+            //       <div style="
+            //         display: flex;
+            //         justify-content: center;
+            //         align-items: center;
+            //         width: 48px; /* 아이콘 너비 */
+            //         height: 89.93523px; /* 아이콘 높이 */
+            //         flex-shrink: 0;
+            //         background-image: url('/pin_park_big.png'); /* 마커 이미지 */
+            //         background-size: cover; /* 이미지가 div를 꽉 채우도록 */
+            //         background-repeat: no-repeat;
+            //         background-position: center;
+            //         position: relative;
+            //         ">
+            //         <div style="
+            //           color: black; /* 텍스트 색상 */
+            //           font-size: 12px; /* 텍스트 크기 */
+            //           /*padding: 2px 4px; !* 텍스트 패딩 *!*/
+            //           background: rgba(255, 255, 255, 0); /* 텍스트 배경 반투명 흰색 */
+            //           /*border-radius: 4px; !* 텍스트 배경 둥글게 *!*/
+            //           /*box-shadow: 0px 2.133px 4.267px rgba(0, 0, 0, 0.2); !* 텍스트 배경 그림자 *!*/
+            //           position: absolute; /* 절대 위치 */
+            //           bottom: 10%; /* 상단에서 30px 위치 */
+            //           left: 50%; /* 왼쪽에서 50% 위치 */
+            //           transform: translate(-50%, 0%); /* 좌우 중앙 정렬 보정 */
+            //           white-space: nowrap;
+            //           ">
+            //           ${Math.round(distance * 1000)} m
+            //         </div>
+            //       </div>
+            //     `;
+            //
+            //     iconSize = new window.Tmapv3.Size(48, 89.93523);
+            //     // zidx = 1003;
+            // } else
+            if (place.size === 1 || place.size === 2 || place.size === 3) {
                 iconPath = `
                     <div style="
                         width: 28px; /* 기본 아이콘 너비 */
@@ -180,7 +196,7 @@ function RouteWalk() {
                 `;
                 iconSize = new window.Tmapv3.Size(28, 40);
                 // zidx = 1002;
-            } else if (place.size === 3) {
+            } else if (place.size === 0) {
                 iconPath = `
                     <div style="
                         width: 24px; /* 기본 아이콘 너비 */
@@ -237,7 +253,7 @@ function RouteWalk() {
                     // console.log("minDist: ", minDist);
                 }
             });
-            if(closestPlace && !overlayMarkerRef.current) {
+            if(closestPlace && !overlayMarkerRef.current && closestPlace.categoryId === 13) {
                 console.log("closestPlace: ", closestPlace);
 
                 const iconPath = `
@@ -249,7 +265,7 @@ function RouteWalk() {
                     width: 48px; /* 아이콘 너비 */
                     height: 89.93523px; /* 아이콘 높이 */
                     flex-shrink: 0;
-                    background-image: url('/icon_pin_medium.png'); /* 마커 이미지 */
+                    background-image: url('/pin_park_big.png'); /* 마커 이미지 */
                     background-size: cover; /* 이미지가 div를 꽉 채우도록 */
                     background-repeat: no-repeat;
                     background-position: center;
