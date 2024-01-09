@@ -13,6 +13,7 @@ import React from "react";
 import NavTime from "./pages/NavTime"
 import NavDest from "./pages/NavDest"
 import SignupNickname from "./pages/SignupNickname";
+import SignupInterest from "./pages/SignupInterest";
 
   const router = createBrowserRouter(
     createRoutesFromElements(
@@ -26,6 +27,7 @@ import SignupNickname from "./pages/SignupNickname";
         <Route path="/route" element={<RouteWalk/>}/>
         <Route path="/navdest" element={<NavDest/>}/>
         <Route path="/signupnickname" element={<SignupNickname/>}/>
+        <Route path="/signupinterest" element={<SignupInterest/>}/>
       </Route>
     )
   );

@@ -4,13 +4,33 @@ import StartButtonDark from "../components/StartButtonDark";
 import BackButton from "../components/BackButton"
 import DefaultBackground from "../components/DefaultBackground";
 import { useForm, FormProvider, Controller } from "react-hook-form";
-import React from 'react';
+import React, {useState} from 'react';
+import axios from "axios";
 
 const Login = () => {
   const navigate = useNavigate();
   const methods = useForm();
   const { watch, register, handleSubmit} = methods;
-  const id = watch("id");
+  const id = watch("id", "");
+
+  // 현재 위치를 서버로 보내는 함수
+  const sendPhoneNumber = async (id) => {
+    try {
+        const response = await axios.get(`/member/check/${id}`);
+
+        if(response.status === 200)
+        {
+            navigate("/home");
+            window.localStorage.setItem('nickname', response.data.nickname);
+            window.localStorage.setItem('phone', response.data.phone);
+            window.localStorage.setItem('id', response.data.id);
+        }
+        else
+            navigate("/signupnickname");
+    } catch (error) {
+        console.error("Error sending location to server: ", error);
+    }
+};
   
   return (
     <div>
@@ -32,8 +52,8 @@ const Login = () => {
                     <StartButtonDark  />
                 </div>
                 :
-                <div style = {{position : 'absolute', top : '712px'}}>
-                    <StartButton loc="/signupnickname" />
+                <div onClick={()=>{sendPhoneNumber(id);}} style = {{position : 'absolute', top : '712px'}}>
+                    <StartButton/>
                 </div>
             }
             
