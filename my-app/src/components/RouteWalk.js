@@ -250,7 +250,7 @@ function RouteWalk() {
             const nearPlaces = places.filter(place => place.size === 1);
 
             // 랜덤 3개 수집
-            const selectedPlaces = selectRandomPlaces(nearPlaces, 2);
+            const selectedPlaces = selectRandomPlaces(nearPlaces, 1);
 
             // test 경유지 설정
             selectedPlaces.unshift({

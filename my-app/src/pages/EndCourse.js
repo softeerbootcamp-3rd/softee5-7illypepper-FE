@@ -18,6 +18,7 @@ import crView from "../assets/courseReview/courseReview_view.png";
 import crCalm from "../assets/courseReview/courseReview_calm.png";
 import crBright from "../assets/courseReview/courseReview_bright.png";
 import crBaby from "../assets/courseReview/courseReview_baby.png";
+import axios from "axios";
 
 const EndCourse = () => {
     const navigate = useNavigate();
@@ -35,6 +36,14 @@ const EndCourse = () => {
 
     const handleStarClick = (index) => {
         setRating(index);
+    }
+
+    const onClickSendReview = async () => {
+        const response = await axios.post('/course/rate', {
+            memberId: 1,
+            routeId: 1,
+            score: rating
+        });
     }
 
     return (
@@ -192,7 +201,9 @@ const EndCourse = () => {
                 {
                     rating > 0 ?
                         <div style={{position: 'absolute', top: '712px'}} onClick={() => {
-                            navigate("/");
+                            console.log("star: ", rating);
+                            onClickSendReview(rating);
+                            navigate("/endcourse");
                         }}>
                             <ActivatedFeedback/>
                         </div>
