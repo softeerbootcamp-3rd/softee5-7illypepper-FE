@@ -3,7 +3,8 @@ import StartButton from "../components/StartButton";
 import StartButtonDark from "../components/StartButtonDark";
 import BackButton from "../components/BackButton"
 import DefaultBackground from "../components/DefaultBackground";
-import { useForm, FormProvider, Controller } from "react-hook-form"
+import { useForm, FormProvider, Controller } from "react-hook-form";
+import React from 'react';
 
 const Login = () => {
   const navigate = useNavigate();

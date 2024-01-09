@@ -3,7 +3,7 @@ import MapBackground from "../components/MapBackground";
 import Tmap from "../components/Tmap";
 import ExitButton from "../components/MapExitButton";
 import MapSelect from "../components/MapSelect";
-
+import React from 'react';
 const Map = () => {
   const navigate = useNavigate();
   const curPos = "양재동";

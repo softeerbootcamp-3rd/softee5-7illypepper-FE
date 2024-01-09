@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import StartButton from "../components/StartButton";
 import DefaultBackground from "../components/DefaultBackground";
 import logo from '../logo.svg';
-
+import React from 'react';
 const Onboarding = () => {
   const navigate = useNavigate();
 
@@ -31,4 +31,4 @@ const Onboarding = () => {
   );
 };
   
-  export default Onboarding;
+export default Onboarding;

@@ -1,5 +1,6 @@
 import Exit from "../assets/icon_signout.png";
 import { useNavigate } from "react-router-dom";
+import React from 'react';
 
 const MapExitButton = () => {
     const navigate = useNavigate();

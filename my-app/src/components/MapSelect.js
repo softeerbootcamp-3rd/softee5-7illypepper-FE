@@ -1,6 +1,6 @@
 import TimeIcon from "../assets/icon_timer.png"
 import LoveIcon from "../assets/icon_heart.png"
-
+import React from 'react';
 const MapSelect = () => {
     return (
       <div id = "map-select-card">
