@@ -32,11 +32,11 @@ const Login = () => {
             {
                 id === "" || id === undefined ?
                 <div style = {{position : 'absolute', top : '712px'}} >
-                    <StartButtonDark />
+                    <StartButtonDark  />
                 </div>
                 :
-                <div style = {{position : 'absolute', top : '712px'}} onClick={() => {navigate("/map")}}>
-                    <StartButton />
+                <div style = {{position : 'absolute', top : '712px'}} onClick={() => {navigate("/navtime")}}>
+                    <StartButton loc="/navdest" />
                 </div>
             }
             

@@ -10,16 +10,20 @@ import Login from './pages/Login'
 import Map from './pages/Map'
 import RouteWalk from "./components/RouteWalk";
 import React from "react";
+import NavTime from "./pages/NavTime"
+import NavDest from "./pages/NavDest"
 
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route>
         <Route path="/" element={<Navigate to="/onboarding" replace />} />
         <Route path="/onboarding" element={<Onboarding/>} />
-        <Route path="/login" element={<Login/>} /> 
+        <Route path="/login" element={<Login/>} />
+        <Route path="/navtime" element={<NavTime/>}/> 
         <Route path="/map" element={<Map/>} />      
         <Route path="*" element={<h1>NotFound</h1>} />
         <Route path="/route" element={<RouteWalk/>}/>
+        <Route path="/navdest" element={<NavDest/>}/>
       </Route>
     )
   );

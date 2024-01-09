@@ -221,3 +221,114 @@ font-style: normal;
 font-weight: 600;
 line-height: 20px; /* 142.857% */
 }
+
+#nav-line{
+  width: 319.932px;
+  height: 0px;
+  flex-shrink: 0;
+  stroke-width: 5px;
+  stroke: var(--gray_50, #F4F4F4);
+}
+
+#nav-line-1{
+  width: 106.643px;
+height: 0px;
+flex-shrink: 0;
+stroke-width: 5px;
+stroke: var(--main-color, #FF8058);
+}
+
+#nav-time-text-empha{
+  color: #FF6D3F;
+
+/* heading 1_bold */
+font-family: Pretendard;
+font-size: 22px;
+font-style: normal;
+font-weight: 600;
+line-height: 30px; /* 136.364% */
+}
+
+#nav-time-text{
+  color: var(--gray-1, #292929);
+
+/* heading 1_bold */
+font-family: Pretendard;
+font-size: 22px;
+font-style: normal;
+font-weight: 600;
+line-height: 30px;
+}
+
+#nav-time-textin{
+  position: absolute;
+left: 27.5px;
+top: 34px;
+color: var(--gray_500, #949494);
+text-align: center;
+
+/* body 1_medium */
+font-family: Pretendard;
+font-size: 18px;
+font-style: normal;
+font-weight: 500;
+line-height: 22px; /* 122.222% */
+}
+
+#nav-next-button{
+  display: flex;
+width: 117px;
+height: 17px;
+padding: 12.5px 15.5px;
+justify-content: center;
+align-items: center;
+gap: 10px;
+flex-shrink: 0;
+border-radius: 100px;
+background: var(--main-color, #FF8058);
+}
+
+#nav-next-button-text{
+  color: var(--white, #FFF);
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 22px; /* 122.222% */
+}
+#nav-next-button-not{
+  display: flex;
+  width: 117px;
+  height: 17px;
+padding: 12.5px 15.5px;
+justify-content: center;
+align-items: center;
+gap: 10px;
+flex-shrink: 0;
+border-radius: 100px;
+background: var(--gray_100, #E8E8E8);
+}
+
+#nav-next-button-not-text{
+  color: var(--gray_600, #777);
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 22px; /* 122.222% */
+}
+
+#nav-time-textin-empha{
+  position: absolute;
+left: 26.5px;
+top: 34px;
+color: #FF6D3F;
+text-align: center;
+font-family: Pretendard;
+font-size: 18px;
+font-style: normal;
+font-weight: 600;
+line-height: 22px; /* 122.222% */
+}
