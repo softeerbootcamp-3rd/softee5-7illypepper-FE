@@ -88,7 +88,7 @@ function RouteWalk() {
                 console.log("Zoom: ", zoomLevel.current);
                 console.log("zl: ", zl);
             }
-        }, 5000); // 5초 간격
+        }, 300); // 5초 간격
 
         // 컴포넌트 언마운트 시 정리
         // return () => clearInterval(interval);
@@ -97,7 +97,8 @@ function RouteWalk() {
         setCurrentLocation(new window.Tmapv3.LatLng(initialLocation.x, initialLocation.y));
         new window.Tmapv3.Marker({
             position: new window.Tmapv3.LatLng(initialLocation.x, initialLocation.y),
-            icon: "/Ellipse304.png",
+            icon: "/mapWave.png",
+            iconSize: new window.Tmapv3.Size(146, 146),
             // draggable: true,
             map: mapRef.current,
         });
@@ -244,7 +245,7 @@ function RouteWalk() {
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    top: 50px;
+                    top: 45px;
                     width: 48px; /* 아이콘 너비 */
                     height: 89.93523px; /* 아이콘 높이 */
                     flex-shrink: 0;
