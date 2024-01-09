@@ -44,6 +44,7 @@ const EndCourse = () => {
             routeId: 1,
             score: rating
         });
+        console.log("Post API - /course/rate: ", response.data);
     }
 
     return (
