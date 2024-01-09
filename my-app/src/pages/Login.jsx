@@ -3,7 +3,8 @@ import StartButton from "../components/StartButton";
 import StartButtonDark from "../components/StartButtonDark";
 import BackButton from "../components/BackButton"
 import DefaultBackground from "../components/DefaultBackground";
-import { useForm, FormProvider, Controller } from "react-hook-form"
+import { useForm, FormProvider, Controller } from "react-hook-form";
+import React from 'react';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ const Login = () => {
   return (
     <div>
         <DefaultBackground/>
-        <div className="background" style = {{display:'flex', justifyContent :'center'}}>
+        <div style = {{display:'flex', justifyContent :'center'}}>
             <div  style={{display:'flex',position : 'absolute', top : '50px', left :'20px'}}>
                 <BackButton />
             </div>

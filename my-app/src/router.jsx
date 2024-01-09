@@ -8,6 +8,8 @@ import {
 import Onboarding from './pages/Onboarding'
 import Login from './pages/Login'
 import Map from './pages/Map'
+import RouteWalk from "./components/RouteWalk";
+import React from "react";
 
   const router = createBrowserRouter(
     createRoutesFromElements(
@@ -17,6 +19,7 @@ import Map from './pages/Map'
         <Route path="/login" element={<Login/>} /> 
         <Route path="/map" element={<Map/>} />      
         <Route path="*" element={<h1>NotFound</h1>} />
+        <Route path="/route" element={<RouteWalk/>}/>
       </Route>
     )
   );
