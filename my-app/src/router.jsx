@@ -11,6 +11,7 @@ import Map from './pages/Map'
 import RouteWalk from "./components/RouteWalk";
 import React from "react";
 import EndCourse from "./pages/EndCourse";
+import ExitGuide from "./components/ExitGuide";
 
   const router = createBrowserRouter(
     createRoutesFromElements(
@@ -22,6 +23,7 @@ import EndCourse from "./pages/EndCourse";
         <Route path="*" element={<h1>NotFound</h1>} />
         <Route path="/route" element={<RouteWalk/>} />
         <Route path="/endcourse" element={<EndCourse/>} />
+        <Route path="/eg" element={<ExitGuide/>} />
       </Route>
     )
   );
