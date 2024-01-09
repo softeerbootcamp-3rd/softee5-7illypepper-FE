@@ -3,7 +3,9 @@ import React, {useEffect, useRef, useState} from 'react';
 import axios from "axios";
 function RouteWalk() {
     const mapRef = useRef(null);
-    const meRef = useRef(null);
+    const markersRef = useRef(new Map());
+    const overlayMarkerRef = useRef(null);
+
     const [currentLocation, setCurrentLocation] = useState([]);
 
     const [places, setPlaces] = useState([]);
@@ -16,6 +18,13 @@ function RouteWalk() {
         // "x": 37.473326,
         // "y": 127.038392
     };
+
+    const mapCenter = useRef({
+        x: initialLocation.x,
+        y: initialLocation.y
+    });
+    const zoomLevel = useRef(17);
+    const [zl, setZl] = useState(16);
 
     // test용 반드시 경유하는 지점
     const certainLocation = {
@@ -51,6 +60,52 @@ function RouteWalk() {
         }
     };
 
+    useEffect(() => {
+        // 지도 초기화
+        if (!mapRef.current) {
+            const map = new window.Tmapv3.Map("map_div", {
+                // center: new window.Tmapv3.LatLng(37.4860034618704, 127.03449720489127),
+                center: new window.Tmapv3.LatLng(initialLocation.x, initialLocation.y),
+                width: "360px",
+                height: "800px",
+                zoom: 15.5
+            });
+            mapRef.current = map;
+        }
+
+        // 매 5초마다 지도의 중심 좌표와 줌 레벨 업데이트
+        const interval = setInterval(() => {
+            if (mapRef.current) {
+                const center = mapRef.current.getCenter();
+                const newZoomLevel = mapRef.current.getZoom();
+
+                mapCenter.current = { x: center.lat(), y: center.lng() };
+                zoomLevel.current = newZoomLevel;
+
+                setZl(zoomLevel.current);
+
+                console.log("Center: ", mapCenter.current);
+                console.log("Zoom: ", zoomLevel.current);
+                console.log("zl: ", zl);
+            }
+        }, 5000); // 5초 간격
+
+        // 컴포넌트 언마운트 시 정리
+        // return () => clearInterval(interval);
+
+        // 초기 위치에 마커 생성
+        setCurrentLocation(new window.Tmapv3.LatLng(initialLocation.x, initialLocation.y));
+        new window.Tmapv3.Marker({
+            position: new window.Tmapv3.LatLng(initialLocation.x, initialLocation.y),
+            icon: "/Ellipse304.png",
+            // draggable: true,
+            map: mapRef.current,
+        });
+
+        // 현재 위치를 서버로 보내기
+        sendCurrentLocationToServer(new window.Tmapv3.LatLng(initialLocation.y, initialLocation.x));
+    }, []);
+
     function getIconPathByCategory(categoryId, size) {
         switch (categoryId) {
             case 13:
@@ -72,7 +127,7 @@ function RouteWalk() {
 
             // 위도에 따른 z-index 계산
             const zidx = Math.round((40 - place.axisY) * 100000);
-            console.log("z-Index by lat", zidx);
+            // console.log("z-Index by lat", zidx);
 
             const distance = calculateDistance(currentLocation, place);
 
@@ -145,6 +200,7 @@ function RouteWalk() {
                 zIndex: zidx,
                 map: mapRef.current,
             });
+            markersRef.current.set(place.id, marker);
 
             // if (markerLabel) {
             //     const label = new window.Tmapv3.Label({
@@ -166,62 +222,76 @@ function RouteWalk() {
     }, [places, currentLocation, mapRef]);
 
     useEffect(() => {
-        // 지도 초기화
-        if (!mapRef.current) {
-            const map = new window.Tmapv3.Map("map_div", {
-                // center: new window.Tmapv3.LatLng(37.4860034618704, 127.03449720489127),
-                center: new window.Tmapv3.LatLng(initialLocation.x, initialLocation.y),
-                width: "360px",
-                height: "800px",
-                zoom: 15.5
-            });
-            mapRef.current = map;
+        console.log("zoomlevel is updated!");
+        if (zoomLevel.current >= 18) {
+            let closestPlace = null;
+            let minDist = Number.MAX_VALUE;
 
-            // 초기 위치에 마커 생성
-            setCurrentLocation(new window.Tmapv3.LatLng(initialLocation.x, initialLocation.y));
-            new window.Tmapv3.Marker({
-                position: new window.Tmapv3.LatLng(initialLocation.x, initialLocation.y),
-                icon: "/Ellipse304.png",
-                map: map,
+            places.forEach(place => {
+                const distance = calculateDistance2(mapCenter.current, place);
+                // console.log("distance: ", distance);
+                if(distance < minDist) {
+                    minDist = distance;
+                    closestPlace = place;
+                    // console.log("minDist: ", minDist);
+                }
             });
+            if(closestPlace && !overlayMarkerRef.current) {
+                console.log("closestPlace: ", closestPlace);
 
-            // 현재 위치를 서버로 보내기
-            sendCurrentLocationToServer(new window.Tmapv3.LatLng(initialLocation.y, initialLocation.x));
-            
+                const iconPath = `
+                  <div style="
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    top: 50px;
+                    width: 48px; /* 아이콘 너비 */
+                    height: 89.93523px; /* 아이콘 높이 */
+                    flex-shrink: 0;
+                    background-image: url('/icon_pin_medium.png'); /* 마커 이미지 */
+                    background-size: cover; /* 이미지가 div를 꽉 채우도록 */
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    position: relative;
+                    ">
+                    <div style="
+                      color: black; /* 텍스트 색상 */
+                      font-size: 12px; /* 텍스트 크기 */
+                      /*padding: 2px 4px; !* 텍스트 패딩 *!*/
+                      background: rgba(255, 255, 255, 0); /* 텍스트 배경 반투명 흰색 */
+                      /*border-radius: 4px; !* 텍스트 배경 둥글게 *!*/
+                      /*box-shadow: 0px 2.133px 4.267px rgba(0, 0, 0, 0.2); !* 텍스트 배경 그림자 *!*/
+                      position: absolute; /* 절대 위치 */
+                      bottom: 10%; /* 상단에서 30px 위치 */
+                      left: 50%; /* 왼쪽에서 50% 위치 */
+                      transform: translate(-50%, 0%); /* 좌우 중앙 정렬 보정 */
+                      white-space: nowrap;
+                      ">
+                      ${Math.round(minDist * 1000)} m
+                    </div>
+                  </div>
+                `;
+
+                const iconSize = new window.Tmapv3.Size(48, 89.93523);
+
+
+                const marker = new window.Tmapv3.Marker({
+                    position: new window.Tmapv3.LatLng(closestPlace.axisY, closestPlace.axisX),
+                    iconHTML: iconPath,
+                    iconSize: iconSize,
+                    zIndex: 300000,
+                    map: mapRef.current,
+                });
+                overlayMarkerRef.current = marker;
+            }
+        } else {
+            // 줌 레벨이 18 미만일 때 새 마커 제거
+            if (overlayMarkerRef.current) {
+                overlayMarkerRef.current.setMap(null);
+                overlayMarkerRef.current = null;
+            }
         }
-        
-        // // 현재 위치 가져오기
-        // if (navigator.geolocation) {
-        //     navigator.geolocation.getCurrentPosition(position => {
-        //         const loc = new window.Tmapv3.LatLng(position.coords.latitude, position.coords.longitude);
-        //         setCurrentLocation(loc);
-        //
-        //         // 현재 위치에 마커 생성
-        //         if (!meRef.current) {
-        //             meRef.current = new window.Tmapv3.Marker({
-        //                 position: loc,
-        //                 icon: "/Ellipse304.png",
-        //                 map: mapRef.current
-        //             });
-        //         }
-        //
-        //         // 지도 중심을 현재 위치로 이동
-        //         mapRef.current.setCenter(loc);
-        //
-        //         // 현재 위치를 서버로 보내기
-        //         sendCurrentLocationToServer(loc);
-        //     }, error => {
-        //         console.error("Geolocation error: " + error.message);
-        //     }, {
-        //         enableHighAccuracy: false,
-        //         timeout: 10000,
-        //         maximumAge: 60000
-        //     });
-        // } else {
-        //     console.error("Geolocation is not supported by this browser.");
-        // }
-    }, []);
-
+    }, [zl]);
 
     const toCenter = () => {
         // 지도 중심을 초기 위치로 이동
@@ -239,6 +309,17 @@ function RouteWalk() {
         const radlat1 = Math.PI * currentLocation._lat / 180;
         const radlat2 = Math.PI * place.axisY / 180;
         const theta = currentLocation._lng - place.axisX;
+        const radtheta = Math.PI * theta / 180;
+        let dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+        dist = Math.acos(dist);
+        dist = dist * 180 / Math.PI;
+        dist = dist * 60 * 1.1515;
+        return dist * 1.609344; // 킬로미터 단위
+    };
+    const calculateDistance2 = (currentLocation, place) => {
+        const radlat1 = Math.PI * currentLocation.x / 180;
+        const radlat2 = Math.PI * place.axisY / 180;
+        const theta = currentLocation.y - place.axisX;
         const radtheta = Math.PI * theta / 180;
         let dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
         dist = Math.acos(dist);
