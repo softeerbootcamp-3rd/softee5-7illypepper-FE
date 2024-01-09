@@ -8,13 +8,26 @@ function RouteWalk() {
 
     const [places, setPlaces] = useState([]);
 
+    const initialLocation = {
+        "x": 37.484498,
+        "y": 127.035068
+    };
+
     // 현재 위치를 서버로 보내는 함수
     const sendCurrentLocationToServer = async (location) => {
         try {
             console.log(location);
-            const response = await axios.post('/find', {
-                axisX: location._lat,
-                axisY: location._lng
+            // const response = await axios.post('/find', {
+            //     axisX: location._lat,
+            //     axisY: location._lng
+            // });
+            const response = await axios.get('/find', {
+                params: {
+                    meter: 50,
+                    count: 3,
+                    x: location._lat,
+                    y: location._lng
+                }
             });
             console.log("Location sent to server: ", response.data);
 
@@ -29,17 +42,18 @@ function RouteWalk() {
         places.map((place) => {
             let iconPath = "";
             let iconSize = 0;
+            let zidx = 0;
 
             const distance = calculateDistance(currentLocation, place);
 
-            if (place.size) {
+            if (place.size===1) {
                 iconPath = `
                   <div style="
                     display: flex;
                     justify-content: center;
                     align-items: center;
                     width: 48px; /* 아이콘 너비 */
-                    height: 89.935px; /* 아이콘 높이 */
+                    height: 89.93523px; /* 아이콘 높이 */
                     flex-shrink: 0;
                     background-image: url('/icon_pin_medium.png'); /* 마커 이미지 */
                     background-size: cover; /* 이미지가 div를 꽉 채우도록 */
@@ -50,7 +64,7 @@ function RouteWalk() {
                     <div style="
                       color: black; /* 텍스트 색상 */
                       font-size: 12px; /* 텍스트 크기 */
-                      padding: 2px 4px; /* 텍스트 패딩 */
+                      /*padding: 2px 4px; !* 텍스트 패딩 *!*/
                       background: rgba(255, 255, 255, 0); /* 텍스트 배경 반투명 흰색 */
                       /*border-radius: 4px; !* 텍스트 배경 둥글게 *!*/
                       /*box-shadow: 0px 2.133px 4.267px rgba(0, 0, 0, 0.2); !* 텍스트 배경 그림자 *!*/
@@ -58,14 +72,16 @@ function RouteWalk() {
                       bottom: 10%; /* 상단에서 30px 위치 */
                       left: 50%; /* 왼쪽에서 50% 위치 */
                       transform: translate(-50%, 0%); /* 좌우 중앙 정렬 보정 */
+                      white-space: nowrap;
                       ">
                       ${Math.round(distance * 1000)} m
                     </div>
                   </div>
                 `;
 
-                iconSize = new window.Tmapv3.Size(42, 73);
-            } else {
+                iconSize = new window.Tmapv3.Size(48, 89.93523);
+                zidx = 1003;
+            } else if (place.size === 2) {
                 iconPath = `
                     <div style="
                         width: 28px; /* 기본 아이콘 너비 */
@@ -76,12 +92,26 @@ function RouteWalk() {
                     </div>
                 `;
                 iconSize = new window.Tmapv3.Size(28, 40);
+                zidx = 1002;
+            } else if (place.size === 3) {
+                iconPath = `
+                    <div style="
+                        width: 24px; /* 기본 아이콘 너비 */
+                        height: 24px; /* 기본 아이콘 높이 */
+                        background-image: url('/deact_coffe.png'); /* 기본 마커 이미지 */
+                        background-size: cover; /* 이미지가 div를 꽉 채우도록 */
+                        ">
+                    </div>
+                `;
+                iconSize = new window.Tmapv3.Size(24, 24);
+                zidx = 1001;
             }
 
             const marker = new window.Tmapv3.Marker({
                 position: new window.Tmapv3.LatLng(place.axisY, place.axisX),
                 iconHTML: iconPath,
                 iconSize: iconSize,
+                zIndex: zidx,
                 map: mapRef.current,
             });
 
@@ -108,7 +138,8 @@ function RouteWalk() {
         // 지도 초기화
         if (!mapRef.current) {
             const map = new window.Tmapv3.Map("map_div", {
-                center: new window.Tmapv3.LatLng(37.4860034618704, 127.03449720489127),
+                // center: new window.Tmapv3.LatLng(37.4860034618704, 127.03449720489127),
+                center: new window.Tmapv3.LatLng(initialLocation.x, initialLocation.y),
                 width: "360px",
                 height: "800px",
                 zoom: 15.5
@@ -116,15 +147,15 @@ function RouteWalk() {
             mapRef.current = map;
 
             // 초기 위치에 마커 생성
-            setCurrentLocation(new window.Tmapv3.LatLng(37.4860034618704, 127.03449720489127));
+            setCurrentLocation(new window.Tmapv3.LatLng(initialLocation.x, initialLocation.y));
             new window.Tmapv3.Marker({
-                position: new window.Tmapv3.LatLng(37.4860034618704, 127.03449720489127),
+                position: new window.Tmapv3.LatLng(initialLocation.x, initialLocation.y),
                 icon: "/Ellipse304.png",
                 map: map,
             });
 
             // 현재 위치를 서버로 보내기
-            sendCurrentLocationToServer(new window.Tmapv3.LatLng(127.03449720489127, 37.4860034618704));
+            sendCurrentLocationToServer(new window.Tmapv3.LatLng(initialLocation.y, initialLocation.x));
             
         }
         
@@ -258,7 +289,8 @@ function RouteWalk() {
         const newPolyline = new window.Tmapv3.Polyline({
             path: linePath,
             strokeColor: "#FF8058",
-            strokeWeight: 6,
+            strokeOpacity: 1,
+            strokeWeight: 5,
             map: mapRef.current
         });
 

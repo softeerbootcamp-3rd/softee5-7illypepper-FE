@@ -12,7 +12,7 @@ const Map = () => {
   return (
     <div>
         <MapBackground/>
-         {/* <RouteWalk/> */}
+        <RouteWalk/>
         <div style = {{position : 'absolute', top : '50px', left : '20px', zIndex : '101'}}>
             <div id ="map-curposintro-text">지금 위치한 지역은</div>
         </div>
