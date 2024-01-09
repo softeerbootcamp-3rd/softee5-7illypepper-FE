@@ -289,7 +289,8 @@ function RouteWalk() {
         const newPolyline = new window.Tmapv3.Polyline({
             path: linePath,
             strokeColor: "#FF8058",
-            strokeWeight: 6,
+            strokeOpacity: 1,
+            strokeWeight: 5,
             map: mapRef.current
         });
 
