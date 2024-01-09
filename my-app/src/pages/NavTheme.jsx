@@ -79,7 +79,7 @@ const NavTheme = () => {
                  :
                  <div onClick={() => {navigate('/map');}} style={{position:'absolute', top:'700px', left :'20px'}}>
                     <div id="course-button">
-                        <div id="course-button-text">코스추천받기</div>
+                        <div id="course-button-text">코스 추천받기</div>
                     </div>
                  </div>
             }
