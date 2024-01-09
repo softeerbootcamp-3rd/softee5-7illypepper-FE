@@ -112,10 +112,29 @@ function RouteWalk() {
         return shuffled.slice(0, count);
     }
 
+    // 현재 위치와 장소 사이의 거리를 계산하는 함수
+    const calculateDistance = (currentLocation, place) => {
+        const radlat1 = Math.PI * currentLocation._lat / 180;
+        const radlat2 = Math.PI * place.axisY / 180;
+        const theta = currentLocation._lng - place.axisX;
+        const radtheta = Math.PI * theta / 180;
+        let dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+        dist = Math.acos(dist);
+        dist = dist * 180 / Math.PI;
+        dist = dist * 60 * 1.1515;
+        return dist * 1.609344; // 킬로미터 단위
+    };
+
     // 도보 경로 요청
     const getPedestrianRoute = async () => {
         if (currentLocation && mapRef.current) {
+            // 랜덤 3개 수집
             const selectedPlaces = selectRandomPlaces(places, 3);
+
+            // places 배열을 거리에 따라 정렬
+            const sortedPlaces = selectedPlaces.sort((a, b) => {
+                return calculateDistance(currentLocation, a) - calculateDistance(currentLocation, b);
+            });
 
             selectedPlaces.unshift({
                 axisX: currentLocation._lng,
