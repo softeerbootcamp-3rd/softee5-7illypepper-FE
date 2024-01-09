@@ -385,3 +385,52 @@ font-style: normal;
 font-weight: 400;
 line-height: 20px; /* 142.857% */
 }
+
+#interest-card-text{
+  color: #040000;
+
+/* body 3_medium */
+font-family: Pretendard;
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: 20px; /* 142.857% */
+}
+
+#interest-card-text-empha{
+  color: var(--main_text, #FF6D3F);
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px; /* 142.857% */
+}
+#interest-card{
+  display: flex;
+padding: 7px 14px;
+justify-content: center;
+align-items: center;
+gap: 10px;
+border-radius: 8px;
+border: 0.953px solid var(--gray_200, #DFDFDF);
+background: #FFF;
+margin-right: 8px;
+}
+
+#interest-card-empha{
+  display: flex;
+padding: 7px 14px;
+justify-content: center;
+align-items: center;
+gap: 10px;
+border-radius: 8px;
+border: 0.953px solid var(--main-color, #FF8058);
+background: #FFF2EE;
+margin-right: 8px;
+}
+
+.home-background{
+  width: 360px;
+  height: 800px;
+  background: #FFFBF0;
+}

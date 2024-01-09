@@ -14,6 +14,7 @@ import NavTime from "./pages/NavTime"
 import NavDest from "./pages/NavDest"
 import SignupNickname from "./pages/SignupNickname";
 import SignupInterest from "./pages/SignupInterest";
+import Home from "./pages/Home"
 
   const router = createBrowserRouter(
     createRoutesFromElements(
@@ -24,6 +25,7 @@ import SignupInterest from "./pages/SignupInterest";
         <Route path="/navtime" element={<NavTime/>}/> 
         <Route path="/map" element={<Map/>} />      
         <Route path="*" element={<h1>NotFound</h1>} />
+        <Route path="/home" element={<Home/>}/>
         <Route path="/route" element={<RouteWalk/>}/>
         <Route path="/navdest" element={<NavDest/>}/>
         <Route path="/signupnickname" element={<SignupNickname/>}/>

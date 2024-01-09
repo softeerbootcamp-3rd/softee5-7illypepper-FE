@@ -53,7 +53,7 @@ const Login = () => {
                 </div>
                 :
                 <div onClick={()=>{sendPhoneNumber(id);}} style = {{position : 'absolute', top : '712px'}}>
-                    <StartButton/>
+                    <StartButton localkey="phone" localvalue = {id}/>
                 </div>
             }
             
