@@ -48,7 +48,7 @@ function RouteWalk() {
                     justify-content: center;
                     align-items: center;
                     width: 48px; /* 아이콘 너비 */
-                    height: 89.935px; /* 아이콘 높이 */
+                    height: 89.93523px; /* 아이콘 높이 */
                     flex-shrink: 0;
                     background-image: url('/icon_pin_medium.png'); /* 마커 이미지 */
                     background-size: cover; /* 이미지가 div를 꽉 채우도록 */
@@ -59,7 +59,7 @@ function RouteWalk() {
                     <div style="
                       color: black; /* 텍스트 색상 */
                       font-size: 12px; /* 텍스트 크기 */
-                      padding: 2px 4px; /* 텍스트 패딩 */
+                      /*padding: 2px 4px; !* 텍스트 패딩 *!*/
                       background: rgba(255, 255, 255, 0); /* 텍스트 배경 반투명 흰색 */
                       /*border-radius: 4px; !* 텍스트 배경 둥글게 *!*/
                       /*box-shadow: 0px 2.133px 4.267px rgba(0, 0, 0, 0.2); !* 텍스트 배경 그림자 *!*/
@@ -67,13 +67,14 @@ function RouteWalk() {
                       bottom: 10%; /* 상단에서 30px 위치 */
                       left: 50%; /* 왼쪽에서 50% 위치 */
                       transform: translate(-50%, 0%); /* 좌우 중앙 정렬 보정 */
+                      white-space: nowrap;
                       ">
                       ${Math.round(distance * 1000)} m
                     </div>
                   </div>
                 `;
 
-                iconSize = new window.Tmapv3.Size(42, 73);
+                iconSize = new window.Tmapv3.Size(48, 89.93523);
                 zidx = 1003;
             } else if (place.size === 2) {
                 iconPath = `
