@@ -140,15 +140,15 @@ const NavTime = () => {
                 }
             </div>
             <div onClick={() => {navigate(-1);}}>
-                <img style={{top : '695px', left : '20px',position : 'absolute', width : '48px', height : '48px'}} src={Mapbef}/>
+                <img style={{top : '700px', left : '20px',position : 'absolute', width : '48px', height : '48px'}} src={Mapbef}/>
             </div>
             {
                 selected === 0 ?
-                 <div style={{position:'absolute', top:'700px', left :'180px'}}>
+                 <div style={{position:'absolute', top:'700px', left :'200px'}}>
                     <NextButtonNot/>
                  </div>
                  :
-                 <div style={{position:'absolute', top:'700px', left :'180px'}}>
+                 <div style={{position:'absolute', top:'700px', left :'200px'}}>
                     <NextButton loc="/navdest"/>
                  </div>
             }
