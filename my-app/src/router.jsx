@@ -10,6 +10,7 @@ import Login from './pages/Login'
 import Map from './pages/Map'
 import RouteWalk from "./components/RouteWalk";
 import React from "react";
+import EndCourse from "./pages/EndCourse";
 
   const router = createBrowserRouter(
     createRoutesFromElements(
@@ -19,7 +20,8 @@ import React from "react";
         <Route path="/login" element={<Login/>} /> 
         <Route path="/map" element={<Map/>} />      
         <Route path="*" element={<h1>NotFound</h1>} />
-        <Route path="/route" element={<RouteWalk/>}/>
+        <Route path="/route" element={<RouteWalk/>} />
+        <Route path="/endcourse" element={<EndCourse/>} />
       </Route>
     )
   );

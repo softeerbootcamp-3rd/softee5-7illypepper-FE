@@ -35,7 +35,10 @@ const Login = () => {
                     <StartButtonDark />
                 </div>
                 :
-                <div style = {{position : 'absolute', top : '712px'}} onClick={() => {navigate("/map")}}>
+                <div style = {{position : 'absolute', top : '712px'}} onClick={() => {
+                    localStorage.setItem('id', id);
+                    navigate("/map");
+                }}>
                     <StartButton />
                 </div>
             }
