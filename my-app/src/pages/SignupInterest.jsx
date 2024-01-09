@@ -44,7 +44,7 @@ const SignupInterest = () => {
             });
             console.log("Location sent to server: ", response.data);
             window.localStorage.setItem('Id', response.data.id);
-            //sendInfoToServer(response.data.id, selectedTexts);
+            sendInfoToServer(response.data.id, selectedTexts);
         } catch (error) {
             console.error("Error sending location to server: ", error);
         }

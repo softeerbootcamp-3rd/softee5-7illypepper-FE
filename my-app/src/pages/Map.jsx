@@ -3,12 +3,17 @@ import MapBackground from "../components/MapBackground";
 import Tmap from "../components/Tmap";
 import ExitButton from "../components/MapExitButton";
 import MapSelect from "../components/MapSelect";
-import React from 'react';
+import React, {useState} from 'react';
 import RouteWalk from "../components/RouteWalk";
+import StartGuide from "../components/StartGuide";
+import ExitGuide from "../components/ExitGuide";
 
 const Map = () => {
   const navigate = useNavigate();
   const curPos = "양재동";
+  const [modalOn, setModalOn] = useState(false);
+  const [startGuide, setStartGuide] = useState(false);
+  const [exitGuide, setExitGuide] = useState(false);
   return (
     <div>
         <MapBackground/>
@@ -20,17 +25,37 @@ const Map = () => {
             <div id ="map-curpos-text">{curPos}</div>
         </div>
         <div style = {{position : 'absolute', top : '50px', left : '300px', zIndex : '101'}}>
-            <ExitButton/>
+            <ExitButton exitOn={()=>{if(startGuide)
+                                        setExitGuide(true);}}/>
         </div>
-        <div style = {{position : 'absolute', top : '620px', left : '-280px'}}>
-            <MapSelect />
-        </div>
-        <div style = {{position : 'absolute', top : '620px', left : '32px'}}>
-            <MapSelect />
-        </div>
-        <div style = {{position : 'absolute', top : '620px', left : '344px'}}>
-            <MapSelect />
-        </div>
+        {
+            !startGuide ?
+            <>
+                <div style = {{position : 'absolute', top : '620px', left : '-280px'}}>
+                    <MapSelect />
+                </div>
+                <div style = {{position : 'absolute', top : '620px', left : '32px'}}>
+                    <MapSelect func={()=>{setModalOn(true);}}/>
+                </div>
+                <div style = {{position : 'absolute', top : '620px', left : '344px'}}>
+                    <MapSelect />
+                </div>
+            </>
+            :
+            <></>           
+        }    
+        {
+            modalOn ?
+            <StartGuide modalOff={()=>{setModalOn(false);}} startGuideOn={()=>{setStartGuide(true);}}/>
+            :
+            <></>
+        }
+        {
+            exitGuide ?
+            <ExitGuide exitGuideOff={()=>{setExitGuide(false);}} turnOff={()=>{navigate('/endcourse')}} />
+            :
+            <></>
+        }
     </div>
   );
 };

@@ -1,24 +1,25 @@
 import React from 'react';
 import {useNavigate} from "react-router-dom";
 
-import BtnExit from '../assets/ExitGuide/Exit.png'
-import BtnCont from '../assets/ExitGuide/No.png'
+import BtnExit from '../assets/StartGuideNo.png'
+import BtnCont from '../assets/StartGuideYes.png'
 
-const ExitGuide = (props) => {
+const StartGuide = (props) => {
     const navigate = useNavigate();
-    const exitGuideOff = props.exitGuideOff;
-    const turnOff = props.turnOff;
+    const modalOff = props.modalOff;
+    const startGuideOn = props.startGuideOn;
+
     return (
         <>
-        <div id="exit-guide-back"/>
+        <div id="start-guide-back"/>
         <div id="exit-guide-card">
-            <div id="exit-guide-main-text">안내를 종료할까요?</div>
+            <div id="start-guide-main-text">해당 코스를 걸어볼까요?</div>
             <div id="exit-guide-sub-text">아직 볼거리가 많이 남았어요!</div>
             <div>
-                <div onClick={exitGuideOff}>
+                <div onClick={()=>{modalOff(); startGuideOn();}}>
                     <img id="exit-guide-btn-cnt" src={BtnCont}/>
                 </div>
-                <div onClick={()=>{exitGuideOff();turnOff();}}>
+                <div onClick={modalOff}>
                     <img id="exit-guide-btn-exit" src={BtnExit}/>
                 </div>
             </div>
@@ -27,4 +28,4 @@ const ExitGuide = (props) => {
     );
 };
 
-export default ExitGuide;
+export default StartGuide;

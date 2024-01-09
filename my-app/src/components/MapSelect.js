@@ -1,10 +1,12 @@
 import TimeIcon from "../assets/icon_timer.png"
 import LoveIcon from "../assets/icon_heart.png"
-import React from 'react';
+import React, { useState } from 'react';
 import {useNavigate} from "react-router-dom";
+import StartGuide from "../components/StartGuide"
 
-const MapSelect = () => {
+const MapSelect = (props) => {
     const navigate = useNavigate();
+    const setModalOn = props.func;
 
     return (
       <div id = "map-select-card">
@@ -33,10 +35,9 @@ const MapSelect = () => {
             </div>
         </div>
         <div id="map-select-card-button" style = {{position : 'relative', left : '160px' , top : '45px', display:'flex', justifyContent :'center', alignItems :'center'}}
-            onClick={() => navigate("/endcourse")}>
+            onClick={() => setModalOn()}>
             <div id="map-select-card-button-text">산책하러 가기</div>
         </div>
-
         
       </div>
     );

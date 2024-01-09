@@ -24,6 +24,7 @@ const EndCourse = () => {
     const methods = useForm();
     const { watch, register, handleSubmit} = methods;
     const id = watch("id");
+    const nickname = window.localStorage.getItem('nickname');
 
     const [rating, setRating] = useState(0);
 
@@ -53,7 +54,7 @@ const EndCourse = () => {
                         lineHeight: '30px',
                         color: 'var(--gray-1, #292929)'
                     }}>
-                        <span style={{color: '#FF8058'}}>{localStorage.getItem('id')}</span>님,<br/>
+                        <span style={{color: '#FF8058'}}>{nickname}</span>님,<br/>
                         추천해드린 코스는 어떠셨나요?
                     </div>
                 </div>
@@ -192,7 +193,7 @@ const EndCourse = () => {
                 {
                     rating > 0 ?
                         <div style={{position: 'absolute', top: '712px'}} onClick={() => {
-                            navigate("/");
+                            navigate("/home");
                         }}>
                             <ActivatedFeedback/>
                         </div>
