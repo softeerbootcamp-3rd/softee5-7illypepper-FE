@@ -101,6 +101,7 @@ function RouteWalk() {
             //     });
             // }
         });
+        getPedestrianRoute();
     }, [places, currentLocation, mapRef]);
 
     useEffect(() => {
@@ -124,8 +125,9 @@ function RouteWalk() {
 
             // 현재 위치를 서버로 보내기
             sendCurrentLocationToServer(new window.Tmapv3.LatLng(127.03449720489127, 37.4860034618704));
+            
         }
-
+        
         // // 현재 위치 가져오기
         // if (navigator.geolocation) {
         //     navigator.geolocation.getCurrentPosition(position => {
@@ -157,6 +159,7 @@ function RouteWalk() {
         //     console.error("Geolocation is not supported by this browser.");
         // }
     }, []);
+
 
     const toCenter = () => {
         // 지도 중심을 초기 위치로 이동
@@ -203,6 +206,8 @@ function RouteWalk() {
             const headers = {
                 appKey: process.env.REACT_APP_API_KEY // 여기에 발급받은 Appkey 입력
             };
+
+            //console.log(process.env.REACT_APP_API_KEY);
 
             try {
                 const allRouteData = [];
@@ -274,27 +279,16 @@ function RouteWalk() {
                 onClick={toCenter}
                 style={{
                     position: 'absolute',
-                    bottom: '30px',
-                    left: '5%',
+                    bottom: '500px',
+                    left: '1%',
                     zIndex: 1000,
                     cursor: 'pointer' // 마우스 오버 시 포인터 모양 변경
                 }}
                 alt="지도 중앙으로"
             />
-            <img
-                src="/Frame3020.png" // '경로 요청 실행' 버튼 이미지 경로
-                onClick={getPedestrianRoute}
-                style={{
-                    position: 'absolute',
-                    bottom: '10px',
-                    left: '50%',
-                    transform: 'translateX(-50%)', // 가로 중앙 정확히 맞추기 위해
-                    zIndex: 1000,
-                    cursor: 'pointer'
-                }}
-                alt="경로 요청 실행"
-            />
+            <div onClick={getPedestrianRoute} style = {{ position : 'absolute', left : '320px' , top : '585px', display:'flex', width:'50px', height: '150px', zIndex :'300'}}/>
         </div>
+        
     );
 }
 

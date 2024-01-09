@@ -1,4 +1,5 @@
 import statusbar from "../assets/Status_Bar_Light_Mode.png"
+import React from 'react';
 const MapBackground = () => {
     return (
         <div>

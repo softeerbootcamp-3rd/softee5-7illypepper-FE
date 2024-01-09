@@ -9,6 +9,7 @@ import Onboarding from './pages/Onboarding'
 import Login from './pages/Login'
 import Map from './pages/Map'
 import RouteWalk from "./components/RouteWalk";
+import React from "react";
 
   const router = createBrowserRouter(
     createRoutesFromElements(
