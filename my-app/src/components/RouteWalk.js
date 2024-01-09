@@ -9,8 +9,22 @@ function RouteWalk() {
     const [places, setPlaces] = useState([]);
 
     const initialLocation = {
-        "x": 37.484498,
-        "y": 127.035068
+        // 양재시민의숲역
+        "x": 37.47000929951769,
+        "y": 127.03852553920082
+        // // 좀 위에
+        // "x": 37.473326,
+        // "y": 127.038392
+    };
+
+    // test용 반드시 경유하는 지점
+    const certainLocation = {
+        "x": 37.4675611293541,
+        "y": 127.03750974228132
+    };
+    const destLocation = {
+        "x": 37.46617240915168,
+        "y": 127.04101042033751
     };
 
     // 현재 위치를 서버로 보내는 함수
@@ -23,7 +37,7 @@ function RouteWalk() {
             // });
             const response = await axios.get('/find', {
                 params: {
-                    meter: 50,
+                    meter: 150,
                     count: 3,
                     x: location._lat,
                     y: location._lng
@@ -37,6 +51,19 @@ function RouteWalk() {
         }
     };
 
+    function getIconPathByCategory(categoryId, size) {
+        switch (categoryId) {
+            case 13:
+                return `/icon_pin_${size}_park.png`;
+            case 3:
+                return `/icon_pin_${size}_stair.png`;
+            case 6:
+                return `/icon_pin_${size}_cat.png`;
+            default:
+                return `/icon_pin_${size}_stair.png`;
+        }
+    }
+
     useEffect(() => {
         console.log("places updated: ", places);
         places.map((place) => {
@@ -46,6 +73,7 @@ function RouteWalk() {
 
             const distance = calculateDistance(currentLocation, place);
 
+            // 거리와 카테고리로 이미지 종류 분기 (크기: 1, 2, 3) (카테고리: 2,3,5,6,8,9,12,13,14,15,16)
             if (place.size===1) {
                 iconPath = `
                   <div style="
@@ -86,7 +114,7 @@ function RouteWalk() {
                     <div style="
                         width: 28px; /* 기본 아이콘 너비 */
                         height: 40px; /* 기본 아이콘 높이 */
-                        background-image: url('/icon_pin_regular.png'); /* 기본 마커 이미지 */
+                        background-image: url('${getIconPathByCategory(place.categoryId, "regular")}'); /* 기본 마커 이미지 */
                         background-size: cover; /* 이미지가 div를 꽉 채우도록 */
                         ">
                     </div>
@@ -98,7 +126,7 @@ function RouteWalk() {
                     <div style="
                         width: 24px; /* 기본 아이콘 너비 */
                         height: 24px; /* 기본 아이콘 높이 */
-                        background-image: url('/deact_coffe.png'); /* 기본 마커 이미지 */
+                        background-image: url('${getIconPathByCategory(place.categoryId, "small")}'); /* 기본 마커 이미지 */
                         background-size: cover; /* 이미지가 div를 꽉 채우도록 */
                         ">
                     </div>
@@ -219,35 +247,50 @@ function RouteWalk() {
     // 도보 경로 요청
     const getPedestrianRoute = async () => {
         if (currentLocation && mapRef.current) {
+            const nearPlaces = places.filter(place => place.size === 1);
+
             // 랜덤 3개 수집
-            const selectedPlaces = selectRandomPlaces(places, 3);
+            const selectedPlaces = selectRandomPlaces(nearPlaces, 2);
+
+            // test 경유지 설정
+            selectedPlaces.unshift({
+                axisX: certainLocation.y,
+                axisY: certainLocation.x
+            })
 
             // places 배열을 거리에 따라 정렬
             const sortedPlaces = selectedPlaces.sort((a, b) => {
                 return calculateDistance(currentLocation, a) - calculateDistance(currentLocation, b);
             });
 
-            selectedPlaces.unshift({
+            console.log("sortedPlaces: ", sortedPlaces);
+
+            // 시작점 경로에 추가
+            sortedPlaces.unshift({
                 axisX: currentLocation._lng,
                 axisY: currentLocation._lat
-            })
+            });
 
-            console.log("selectedPlaces", selectedPlaces);
+            // test 목적지 설정
+            sortedPlaces.push({
+                axisX: destLocation.y,
+                axisY: destLocation.x
+            });
+
+            console.log("Path: ", sortedPlaces);
 
             const headers = {
                 appKey: process.env.REACT_APP_API_KEY // 여기에 발급받은 Appkey 입력
             };
 
-            //console.log(process.env.REACT_APP_API_KEY);
-
             try {
                 const allRouteData = [];
-                for (let i = 0; i < selectedPlaces.length - 1; i++) {
+                for (let i = 0; i < sortedPlaces.length - 1; i++) {
                     const response = await axios.post("https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1&format=json&callback=result", {
-                        startX: selectedPlaces[i].axisX,
-                        startY: selectedPlaces[i].axisY,
-                        endX: selectedPlaces[i + 1].axisX,
-                        endY: selectedPlaces[i + 1].axisY,
+                        startX: sortedPlaces[i].axisX,
+                        startY: sortedPlaces[i].axisY,
+                        endX: sortedPlaces[i + 1].axisX,
+                        endY: sortedPlaces[i + 1].axisY,
                         reqCoordType: "WGS84GEO",
                         resCoordType: "WGS84GEO",
                         startName: "출발지",
@@ -281,7 +324,7 @@ function RouteWalk() {
             if(feature.geometry.type==="Point") {
                 const lon = feature.geometry.coordinates[0];
                 const lat = feature.geometry.coordinates[1];
-                console.log("lat, lon : ", lat, lon);
+                // console.log("lat, lon : ", lat, lon);
                 linePath.push(new window.Tmapv3.LatLng(lat, lon));
             }
         });
@@ -291,7 +334,8 @@ function RouteWalk() {
             strokeColor: "#FF8058",
             strokeOpacity: 1,
             strokeWeight: 5,
-            map: mapRef.current
+            map: mapRef.current,
+            // direction: true
         });
 
         setRoutePolyline(newPolyline);
