@@ -391,7 +391,7 @@ line-height: 20px; /* 142.857% */
 
 /* body 3_medium */
 font-family: Pretendard;
-font-size: 14px;
+font-size: 12px;
 font-style: normal;
 font-weight: 500;
 line-height: 20px; /* 142.857% */
@@ -400,7 +400,7 @@ line-height: 20px; /* 142.857% */
 #interest-card-text-empha{
   color: var(--main_text, #FF6D3F);
   font-family: Pretendard;
-  font-size: 14px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 600;
   line-height: 20px; /* 142.857% */
@@ -565,4 +565,44 @@ line-height: 22px; /* 122.222% */
   top: 97px;
   left: 152px;
   z-index: 100;
+}
+
+#popup-card{
+  width: 320px;
+  height: 260px;
+  flex-shrink: 0;
+  background-color: #FFF;
+  filter: drop-shadow(0px 4px 15px rgba(0, 0, 0, 0.15));
+}
+
+#popup-card-text{
+  color: var(--gray_900, #121212);
+font-family: Pretendard;
+font-size: 17px;
+font-style: normal;
+font-weight: 600;
+line-height: 22px; /* 129.412% */
+}
+
+#popup-button{
+  display: flex;
+  width: 253px;
+  height: 23px;
+  padding: 12.5px 15.5px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  border-radius: 100px;
+background: var(--main-color, #FF8058);
+}
+
+#popup-button-text{
+  color: var(--white, #FFF);
+text-align: center;
+font-family: Pretendard;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: 22px; /* 137.5% */
 }

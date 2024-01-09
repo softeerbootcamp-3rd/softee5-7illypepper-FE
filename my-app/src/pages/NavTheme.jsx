@@ -9,7 +9,7 @@ const NavTheme = () => {
   const navigate = useNavigate();
   const [array, setArray] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0]);
   const [selectedNum, setSelectedNum] = useState(0);
-  const textArray = ["계단이 없는","잔잔한", "볼거리가 많은", "동물", "커피향이 솔솔 나는", "피톤치드 가득한", "스포츠", "스포츠", "볼거리가 많은", "커뮤니티", "뷰티 생활", "당 충전", "맛집 탐방", "전시 관람", "패션", "도움"];
+  const textArray = ["계단이 없는","잔잔한", "볼거리가 많은", "동물", "커피향이 솔솔 나는", "피톤치드 가득한", "스포츠", "볼거리가 많은", "커뮤니티", "뷰티 생활", "당 충전", "맛집 탐방", "역사 지식", "패션"];
 
   const onPressed = (value) => {
     const newArray = [...array]; 
@@ -54,17 +54,17 @@ const NavTheme = () => {
                         })}
                     </div>
                     <div style= {{marginTop : '13px',display : 'flex'}}>
-                        {[4, 5, 6, 7].map((index) => {
+                        {[4, 5, 6].map((index) => {
                             return <InterestButton onPressed = {()=>{onPressed(index)}}  key={index} state={array[index]} text={textArray[index]}/>;
                         })}
                     </div>
                     <div style= {{marginTop : '13px',display : 'flex'}}>
-                        {[8, 9, 10 ,11].map((index) => {
+                        {[7, 8, 9, 10].map((index) => {
                             return <InterestButton onPressed = {()=>{onPressed(index)}}  key={index} state={array[index]} text={textArray[index]}/>;
                         })}
                     </div>
                     <div style= {{marginTop : '13px',display : 'flex'}}>
-                        {[12, 13, 14, 15].map((index) => {
+                        {[11, 12, 13].map((index) => {
                             return <InterestButton onPressed = {()=>{onPressed(index)}}  key={index} state={array[index]} text={textArray[index]}/>;
                         })}
                     </div>
