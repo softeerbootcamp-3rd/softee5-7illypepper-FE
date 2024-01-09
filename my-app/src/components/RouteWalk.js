@@ -12,9 +12,17 @@ function RouteWalk() {
     const sendCurrentLocationToServer = async (location) => {
         try {
             console.log(location);
-            const response = await axios.post('/find', {
-                axisX: location._lat,
-                axisY: location._lng
+            // const response = await axios.post('/find', {
+            //     axisX: location._lat,
+            //     axisY: location._lng
+            // });
+            const response = await axios.get('/find', {
+                params: {
+                    meter: 50,
+                    count: 3,
+                    x: location._lat,
+                    y: location._lng
+                }
             });
             console.log("Location sent to server: ", response.data);
 
@@ -32,7 +40,7 @@ function RouteWalk() {
 
             const distance = calculateDistance(currentLocation, place);
 
-            if (place.size) {
+            if (place.size===1) {
                 iconPath = `
                   <div style="
                     display: flex;
@@ -65,7 +73,18 @@ function RouteWalk() {
                 `;
 
                 iconSize = new window.Tmapv3.Size(42, 73);
-            } else {
+            } else if (place.size === 2) {
+                iconPath = `
+                    <div style="
+                        width: 28px; /* 기본 아이콘 너비 */
+                        height: 40px; /* 기본 아이콘 높이 */
+                        background-image: url('/icon_pin_regular.png'); /* 기본 마커 이미지 */
+                        background-size: cover; /* 이미지가 div를 꽉 채우도록 */
+                        ">
+                    </div>
+                `;
+                iconSize = new window.Tmapv3.Size(28, 40);
+            } else if (place.size === 3) {
                 iconPath = `
                     <div style="
                         width: 28px; /* 기본 아이콘 너비 */
