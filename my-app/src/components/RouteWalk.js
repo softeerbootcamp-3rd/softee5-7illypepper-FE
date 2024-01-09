@@ -8,6 +8,11 @@ function RouteWalk() {
 
     const [places, setPlaces] = useState([]);
 
+    const initialLocation = {
+        "x": 37.484498,
+        "y": 127.035068
+    };
+
     // 현재 위치를 서버로 보내는 함수
     const sendCurrentLocationToServer = async (location) => {
         try {
@@ -133,7 +138,8 @@ function RouteWalk() {
         // 지도 초기화
         if (!mapRef.current) {
             const map = new window.Tmapv3.Map("map_div", {
-                center: new window.Tmapv3.LatLng(37.4860034618704, 127.03449720489127),
+                // center: new window.Tmapv3.LatLng(37.4860034618704, 127.03449720489127),
+                center: new window.Tmapv3.LatLng(initialLocation.x, initialLocation.y),
                 width: "360px",
                 height: "800px",
                 zoom: 15.5
@@ -141,15 +147,15 @@ function RouteWalk() {
             mapRef.current = map;
 
             // 초기 위치에 마커 생성
-            setCurrentLocation(new window.Tmapv3.LatLng(37.4860034618704, 127.03449720489127));
+            setCurrentLocation(new window.Tmapv3.LatLng(initialLocation.x, initialLocation.y));
             new window.Tmapv3.Marker({
-                position: new window.Tmapv3.LatLng(37.4860034618704, 127.03449720489127),
+                position: new window.Tmapv3.LatLng(initialLocation.x, initialLocation.y),
                 icon: "/Ellipse304.png",
                 map: map,
             });
 
             // 현재 위치를 서버로 보내기
-            sendCurrentLocationToServer(new window.Tmapv3.LatLng(127.03449720489127, 37.4860034618704));
+            sendCurrentLocationToServer(new window.Tmapv3.LatLng(initialLocation.y, initialLocation.x));
             
         }
         
