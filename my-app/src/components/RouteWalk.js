@@ -37,6 +37,7 @@ function RouteWalk() {
         places.map((place) => {
             let iconPath = "";
             let iconSize = 0;
+            let zidx = 0;
 
             const distance = calculateDistance(currentLocation, place);
 
@@ -73,6 +74,7 @@ function RouteWalk() {
                 `;
 
                 iconSize = new window.Tmapv3.Size(42, 73);
+                zidx = 1003;
             } else if (place.size === 2) {
                 iconPath = `
                     <div style="
@@ -84,23 +86,26 @@ function RouteWalk() {
                     </div>
                 `;
                 iconSize = new window.Tmapv3.Size(28, 40);
+                zidx = 1002;
             } else if (place.size === 3) {
                 iconPath = `
                     <div style="
-                        width: 28px; /* 기본 아이콘 너비 */
-                        height: 40px; /* 기본 아이콘 높이 */
-                        background-image: url('/icon_pin_regular.png'); /* 기본 마커 이미지 */
+                        width: 24px; /* 기본 아이콘 너비 */
+                        height: 24px; /* 기본 아이콘 높이 */
+                        background-image: url('/deact_coffe.png'); /* 기본 마커 이미지 */
                         background-size: cover; /* 이미지가 div를 꽉 채우도록 */
                         ">
                     </div>
                 `;
-                iconSize = new window.Tmapv3.Size(28, 40);
+                iconSize = new window.Tmapv3.Size(24, 24);
+                zidx = 1001;
             }
 
             const marker = new window.Tmapv3.Marker({
                 position: new window.Tmapv3.LatLng(place.axisY, place.axisX),
                 iconHTML: iconPath,
                 iconSize: iconSize,
+                zIndex: zidx,
                 map: mapRef.current,
             });
 
