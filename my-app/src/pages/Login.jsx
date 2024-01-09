@@ -14,7 +14,7 @@ const Login = () => {
   return (
     <div>
         <DefaultBackground/>
-        <div className="background" style = {{display:'flex', justifyContent :'center'}}>
+        <div style = {{display:'flex', justifyContent :'center'}}>
             <div  style={{display:'flex',position : 'absolute', top : '50px', left :'20px'}}>
                 <BackButton />
             </div>
