@@ -9,7 +9,7 @@ const NavTheme = () => {
   const navigate = useNavigate();
   const [array, setArray] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0]);
   const [selectedNum, setSelectedNum] = useState(0);
-  const textArray = ["계단이 없는","잔잔한", "볼거리가 많은", "동물", "커피향이 솔솔 나는", "피톤치드 가득한", "스포츠", "볼거리가 많은", "커뮤니티", "뷰티 생활", "당 충전", "맛집 탐방", "역사 지식", "패션"];
+  const textArray = ["계단이 없는","잔잔한", "볼거리가 많은", "북적한", "커피향이 솔솔 나는", "피톤치드 가득한", "모래길", "볼거리가 많은", "경사진", "네모난", "가로수길", "하늘이 잘 보이는", "골목길", "야시장길"];
 
   const onPressed = (value) => {
     const newArray = [...array]; 
