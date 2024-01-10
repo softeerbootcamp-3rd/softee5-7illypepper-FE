@@ -20,7 +20,7 @@ function Tmap() {
             places.forEach(place => {
                 new window.Tmapv3.Marker({
                     position: new window.Tmapv3.LatLng(place.latitude, place.longitude),
-                    icon: "/pinBig.png",
+                    icon: "/pin_park_big.png",
                     iconSize: new window.Tmapv3.Size(42, 73),
                     map: map
                 });
