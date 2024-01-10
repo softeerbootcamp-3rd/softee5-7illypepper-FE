@@ -44,8 +44,9 @@ function RouteWalk() {
             //     axisX: location._lat,
             //     axisY: location._lng
             // });
-            const response = await axios.get('/find', {
+            const response = await axios.get('/findfind', {
                 params: {
+                    memberId: 1,
                     meter: 150,
                     count: 3,
                     x: location._lat,
@@ -99,6 +100,7 @@ function RouteWalk() {
             position: new window.Tmapv3.LatLng(initialLocation.x, initialLocation.y),
             icon: "/mapWave.png",
             iconSize: new window.Tmapv3.Size(146, 146),
+            offset: new window.Tmapv3.Point(0, 73),
             // draggable: true,
             map: mapRef.current,
         });
@@ -108,6 +110,7 @@ function RouteWalk() {
             position: new window.Tmapv3.LatLng(destLocation.x, destLocation.y),
             icon: '/map_flag.png',
             iconSize: new window.Tmapv3.Size(30, 35),
+            offset: new window.Tmapv3.Point(0, 20),
             zIndex: 300000,
             map: mapRef.current,
         });
@@ -117,22 +120,30 @@ function RouteWalk() {
     }, []);
 
     function getIconPathByCategory(categoryId, size) {
-        switch (categoryId) {
-            case 1:
-                return `/pin_camera_${size}.png`;
-            case 3:
-                return `/pin_animal_${size}.png`;
-            case 13:
-                return `/pin_park_${size}.png`;
-            default:
-                const smallIcons = [
-                    '/pin_store_small.png',
-                    '/pin_stair_small.png',
-                    '/pin_lamp_small.png'
-                ];
-                const randIdx = Math.floor(Math.random() * smallIcons.length);
-                return smallIcons[randIdx];
+        if(size === "regular") {
+            switch (categoryId) {
+                case 1:
+                    return `/pin_camera_${size}.png`;
+                case 9:
+                    return `/pin_park_${size}.png`;
+                case 16:
+                    return `/pin_animal_${size}.png`;
+                default:
+                    return;
+            }
+        } else if (size === "small") {
+            switch (categoryId) {
+                default:
+                    const smallIcons = [
+                        '/pin_store_small.png',
+                        '/pin_stair_small.png',
+                        '/pin_lamp_small.png'
+                    ];
+                    const randIdx = Math.floor(Math.random() * smallIcons.length);
+                    return smallIcons[randIdx];
+            }
         }
+
     }
 
     useEffect(() => {
@@ -206,6 +217,7 @@ function RouteWalk() {
                         ">
                     </div>
                 `;
+                // console.log(iconPath);
                 iconSize = new window.Tmapv3.Size(24, 24);
                 // zidx = 1001;
             }
@@ -253,7 +265,7 @@ function RouteWalk() {
                     // console.log("minDist: ", minDist);
                 }
             });
-            if(closestPlace && !overlayMarkerRef.current && closestPlace.categoryId === 13) {
+            if(closestPlace && !overlayMarkerRef.current && closestPlace.categoryId === 9) {
                 console.log("closestPlace: ", closestPlace);
 
                 const iconPath = `
