@@ -1,7 +1,9 @@
 import React, {useEffect, useRef, useState} from 'react';
 // import places from '../data/places';
 import axios from "axios";
-function RouteWalk() {
+import { useEffectOnce } from './useEffectOnce';
+
+function RouteWalk(props) {
     const mapRef = useRef(null);
     const markersRef = useRef(new Map());
     const overlayMarkerRef = useRef(null);
@@ -84,10 +86,6 @@ function RouteWalk() {
                 zoomLevel.current = newZoomLevel;
 
                 setZl(zoomLevel.current);
-
-                console.log("Center: ", mapCenter.current);
-                console.log("Zoom: ", zoomLevel.current);
-                console.log("zl: ", zl);
             }
         }, 300); // 5초 간격
 
@@ -326,6 +324,7 @@ function RouteWalk() {
                     map: mapRef.current,
                 });
                 overlayMarkerRef.current = marker;
+                props.popupTrue();
             }
         } else {
             // 줌 레벨이 18 미만일 때 새 마커 제거
@@ -440,7 +439,7 @@ function RouteWalk() {
     const drawPedestrianRoute = (routeData) => {
         console.log("drawPedestrianRoute()");
         // console.log("routeData: ", JSON.stringify(routeData, null, 2));
-
+        console.log(routePolyline);
         if (routePolyline) {
             routePolyline.setMap(null);
         }
@@ -491,7 +490,6 @@ function RouteWalk() {
             />
             <div onClick={getPedestrianRoute} style = {{ position : 'absolute', left : '320px' , top : '585px', display:'flex', width:'50px', height: '150px', zIndex :'300'}}/>
         </div>
-        
     );
 }
 

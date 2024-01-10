@@ -7,6 +7,7 @@ import React, {useState} from 'react';
 import RouteWalk from "../components/RouteWalk";
 import StartGuide from "../components/StartGuide";
 import ExitGuide from "../components/ExitGuide";
+import Popup from "../components/Popup";
 
 const Map = () => {
   const navigate = useNavigate();
@@ -14,10 +15,11 @@ const Map = () => {
   const [modalOn, setModalOn] = useState(false);
   const [startGuide, setStartGuide] = useState(false);
   const [exitGuide, setExitGuide] = useState(false);
+  const [popup, setPopup] = useState(false);
   return (
     <div>
         <MapBackground/>
-        <RouteWalk/>
+        <RouteWalk popupTrue= {()=>setPopup(true)}/>
         <div style = {{position : 'absolute', top : '50px', left : '20px', zIndex : '101'}}>
             <div id ="map-curposintro-text">지금 위치한 지역은</div>
         </div>
@@ -53,6 +55,12 @@ const Map = () => {
         {
             exitGuide ?
             <ExitGuide exitGuideOff={()=>{setExitGuide(false);}} turnOff={()=>{navigate('/endcourse')}} />
+            :
+            <></>
+        }
+        {
+            popup ?
+            <Popup func={()=>setPopup(false)}/>
             :
             <></>
         }
