@@ -8,6 +8,7 @@ const NavTime = () => {
   const navigate = useNavigate();
   const [selected, setSelected] = useState(0);
   const [array, setArray] = useState([0, 0, 0, 0, 0, 0, 0]);
+  const nickname = window.localStorage.getItem('nickname');
 
   const onPressed = (value, index) => {
     if(array[index] === 1) {
@@ -38,7 +39,7 @@ const NavTime = () => {
             </div>
             <div style={{position : 'absolute', top : '120px', left : '20px'}}>
                 <div id="nav-time-text">
-                    <span id = "nav-time-text-empha">심심해</span>님,<br/>오늘은 몇분 정도 걸어볼까요?</div>
+                    <span id = "nav-time-text-empha">{nickname}</span>님,<br/>오늘은 몇분 정도 걸어볼까요?</div>
             </div>
             <div>
                 {
