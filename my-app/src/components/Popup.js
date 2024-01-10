@@ -11,7 +11,7 @@ const Popup = () => {
         <img style={{position:'absolute',top : '470px', left :'20px',zIndex :'1005', width : '60px', height:'60px'}} src={popupTop}/>
         <img style={{position:'absolute',top : '570px', left :'34px',zIndex :'1005', width : '284px', height:'96px'}} src={popupRec}/>
         <div id="start-guide-back"/>
-        <div style={{position:'absolute',top : '500px',zIndex :'1004'}}>
+        <div style={{position:'absolute',left : '3px',top : '500px',zIndex :'1004'}}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="351" height="291" viewBox="0 0 351 291" fill="none">
                     <g filter="url(#filter0_d_206_11061)">
                         <path d="M15.9307 31.6621C15.9307 20.6164 24.885 11.6621 35.9307 11.6621H315.931C326.976 11.6621 335.931 20.6164 335.931 31.6621V251.662C335.931 262.708 326.976 271.662 315.931 271.662H35.9307C24.885 271.662 15.9307 262.708 15.9307 251.662V31.6621Z" fill="white"/>
