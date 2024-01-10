@@ -26,6 +26,8 @@ function RouteWalk() {
     const zoomLevel = useRef(17);
     const [zl, setZl] = useState(16);
 
+    const [atFirst, setAtFirst] = useState(false);
+
     // test용 반드시 경유하는 지점
     const certainLocation = {
         "x": 37.4675611293541,
@@ -85,9 +87,9 @@ function RouteWalk() {
 
                 setZl(zoomLevel.current);
 
-                console.log("Center: ", mapCenter.current);
-                console.log("Zoom: ", zoomLevel.current);
-                console.log("zl: ", zl);
+                // console.log("Center: ", mapCenter.current);
+                // console.log("Zoom: ", zoomLevel.current);
+                // console.log("zl: ", zl);
             }
         }, 300); // 5초 간격
 
@@ -258,7 +260,9 @@ function RouteWalk() {
             //     });
             // }
         });
+
         getPedestrianRoute();
+
     }, [places, currentLocation, mapRef]);
 
     useEffect(() => {
@@ -435,14 +439,19 @@ function RouteWalk() {
     };
 
     const [routePolyline, setRoutePolyline] = useState(null);
+    const routeRef = useRef(null);
 
     // 도보 경로 그리기
     const drawPedestrianRoute = (routeData) => {
         console.log("drawPedestrianRoute()");
         // console.log("routeData: ", JSON.stringify(routeData, null, 2));
 
-        if (routePolyline) {
-            routePolyline.setMap(null);
+        if (!mapRef.current) return;
+
+        console.log("routePloyline: ", routeRef.current);
+        if (routeRef.current) {
+            console.log("routePloyline: ", routeRef.current);
+            routeRef.current.setMap(null);
         }
 
         const linePath = [];
@@ -462,10 +471,10 @@ function RouteWalk() {
             strokeOpacity: 1,
             strokeWeight: 5,
             map: mapRef.current,
-            // direction: true
         });
 
-        setRoutePolyline(newPolyline);
+        // setRoutePolyline(newPolyline);
+        routeRef.current = newPolyline;
     };
 
     return (
