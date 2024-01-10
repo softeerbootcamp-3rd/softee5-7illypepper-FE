@@ -1,7 +1,7 @@
 import React from 'react';
 import {useNavigate} from "react-router-dom";
 import popupTop from "../assets/popup_top.png";
-import popupRec from "../assets/popup_rec.png";
+import popupRec from "../assets/popup_component.png";
 
 const Popup = () => {
     const navigate = useNavigate();

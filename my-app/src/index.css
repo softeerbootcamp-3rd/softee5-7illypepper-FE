@@ -625,3 +625,14 @@ font-style: normal;
 font-weight: 600;
 line-height: normal;
 }
+
+#home-pos-text{
+  color: rgba(0, 0, 0, 0.80);
+font-family: Pretendard;
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: 18px; /* 128.571% */
+margin-top: 3px;
+margin-left: 2px;
+}
