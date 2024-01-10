@@ -284,7 +284,7 @@ function RouteWalk() {
                       transform: translate(-50%, 0%); /* 좌우 중앙 정렬 보정 */
                       white-space: nowrap;
                       ">
-                      ${Math.round(minDist * 1000)} m
+                      ${Math.round(calculateDistance(currentLocation, closestPlace) * 1000)} m
                     </div>
                   </div>
                 `;
