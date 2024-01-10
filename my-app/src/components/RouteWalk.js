@@ -120,7 +120,18 @@ function RouteWalk() {
     }, []);
 
     function getIconPathByCategory(categoryId, size) {
-        if(size === "regular") {
+        if (size === "big") {
+            switch (categoryId) {
+                case 1:
+                    return `/pin_camera_${size}.png`;
+                case 9:
+                    return `/pin_park_${size}.png`;
+                case 16:
+                    return `/pin_animal_${size}.png`;
+                default:
+                    return;
+            }
+        } else if(size === "regular") {
             switch (categoryId) {
                 case 1:
                     return `/pin_camera_${size}.png`;
@@ -265,10 +276,13 @@ function RouteWalk() {
                     // console.log("minDist: ", minDist);
                 }
             });
-            if(closestPlace && !overlayMarkerRef.current && closestPlace.categoryId === 9) {
+
+            if(closestPlace && !overlayMarkerRef.current) {
                 console.log("closestPlace: ", closestPlace);
 
-                const iconPath = `
+                const iconPath = getIconPathByCategory(closestPlace.categoryId, "big");
+
+                const iconPathFull = `
                   <div style="
                     display: flex;
                     justify-content: center;
@@ -277,7 +291,7 @@ function RouteWalk() {
                     width: 48px; /* 아이콘 너비 */
                     height: 89.93523px; /* 아이콘 높이 */
                     flex-shrink: 0;
-                    background-image: url('/pin_park_big.png'); /* 마커 이미지 */
+                    background-image: url('${iconPath}'); /* 마커 이미지 */
                     background-size: cover; /* 이미지가 div를 꽉 채우도록 */
                     background-repeat: no-repeat;
                     background-position: center;
@@ -306,7 +320,7 @@ function RouteWalk() {
 
                 const marker = new window.Tmapv3.Marker({
                     position: new window.Tmapv3.LatLng(closestPlace.axisY, closestPlace.axisX),
-                    iconHTML: iconPath,
+                    iconHTML: iconPathFull,
                     iconSize: iconSize,
                     zIndex: 300000,
                     map: mapRef.current,
