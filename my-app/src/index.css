@@ -606,3 +606,22 @@ font-style: normal;
 font-weight: 600;
 line-height: 22px; /* 137.5% */
 }
+
+#home-button-text{
+  color: var(--main-color, #FF8058);
+text-align: center;
+font-family: Pretendard;
+font-size: 13.4px;
+font-style: normal;
+font-weight: 600;
+line-height: 140%; /* 18.76px */
+}
+
+#home-profile-text{
+  color: var(--gray_400, #B7B7B7);
+font-family: Pretendard;
+font-size: 13px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+}
