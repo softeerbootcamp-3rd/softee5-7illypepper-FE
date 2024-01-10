@@ -1,10 +1,15 @@
 import React from 'react';
-const StartButton = () => {
+import { useNavigate } from "react-router-dom";
+const StartButton = (props) => {
+  const navigate = useNavigate();
+  const saveLocalStorage = () => {
+    window.localStorage.setItem(props.localkey, props.localvalue);
+  }
 
   return (
     <div>
-        <div id="startbutton">
-            <div id="startbutton-text">시작하기</div>
+        <div id="startbutton"  onClick={() => {navigate(props.loc); saveLocalStorage();}}>
+            <div id="startbutton-text">다음으로</div>
         </div>
     </div>
   );

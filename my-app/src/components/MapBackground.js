@@ -1,9 +1,11 @@
 import statusbar from "../assets/Status_Bar_Light_Mode.png"
+import gradient from "../assets/Background_top.png"
 import React from 'react';
 const MapBackground = () => {
     return (
-        <div>
-            <img style={{width : '360px', height : '32px' }} src={statusbar}/>
+        <div> 
+            <img style={{top:'0px', position : 'absolute', width : '360px', height : '32px', zIndex : '101' }} src={statusbar}/>
+            <img  style={{top:'0px', position : 'absolute', width: '360px', zIndex : '100' }} src={gradient}/>    
         </div>  
     );
   };
